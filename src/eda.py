@@ -10,7 +10,8 @@ import numpy as np
 import pandas as pd
 from matplotlib.ticker import PercentFormatter
 
-from src.data import FIG_DIR, basic_summary, load_data, make_train_test_split
+from src.config import FIG_DIR
+from src.data import basic_summary, load_data, make_train_test_split
 
 plt.rcParams["font.size"] = 11
 UNIVERSITY_DEGREES = ["Bachelors", "Masters", "Prof-school", "Doctorate"]

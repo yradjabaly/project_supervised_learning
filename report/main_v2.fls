@@ -177,6 +177,16 @@ INPUT ./figures/pr_curves.pdf
 INPUT ./figures/pr_curves.pdf
 INPUT ./figures/pr_curves.pdf
 INPUT ./figures/pr_curves.pdf
+INPUT ./figures/default_vs_tuned.pdf
+INPUT ./figures/default_vs_tuned.pdf
+INPUT ./figures/default_vs_tuned.pdf
+INPUT ./figures/default_vs_tuned.pdf
+INPUT ./figures/default_vs_tuned.pdf
+INPUT ./figures/optuna_history.pdf
+INPUT ./figures/optuna_history.pdf
+INPUT ./figures/optuna_history.pdf
+INPUT ./figures/optuna_history.pdf
+INPUT ./figures/optuna_history.pdf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT ./figures/capital_net_transform.pdf
 INPUT ./figures/capital_net_transform.pdf
@@ -192,6 +202,7 @@ INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb

@@ -19,24 +19,24 @@
 \@writefile{toc}{\contentsline {paragraph}{Demographics.}{2}{section*.8}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Exploratory analysis on the training set. (a) and (d): share of people earning $>$50K{} in each category; the dashed line is the overall rate. In (a), missing work classes are shown as a separate bar. (b) and (c): distribution within each class (each class sums to 100\%). In (b), the dashed lines are Tukey's bounds: $40 - 1.5 \times 5 = 32.5$ and $45 + 1.5 \times 5 = 52.5$ hours.}}{3}{figure.caption.6}\protected@file@percent }
 \newlabel{fig:eda}{{1}{3}{Exploratory analysis on the training set. (a) and (d): share of people earning \high {} in each category; the dashed line is the overall rate. In (a), missing work classes are shown as a separate bar. (b) and (c): distribution within each class (each class sums to 100\%). In (b), the dashed lines are Tukey's bounds: $40 - 1.5 \times 5 = 32.5$ and $45 + 1.5 \times 5 = 52.5$ hours}{figure.caption.6}{}}
-\@writefile{toc}{\contentsline {paragraph}{Sex.}{4}{section*.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2}Data Preparation and Feature Engineering}{4}{section.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Missing values}{4}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Sex.}{3}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Data Preparation and Feature Engineering}{3}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Missing values}{3}{subsection.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Extreme values}{4}{subsection.2.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Rare and inconsistent categories}{4}{subsection.2.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Encoding and scaling}{4}{subsection.2.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Engineered features}{4}{subsection.2.5}\protected@file@percent }
 \newlabel{sec:features}{{2.5}{4}{Engineered features}{subsection.2.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Engineered features and the columns they replace.}}{4}{table.caption.10}\protected@file@percent }
+\newlabel{tab:features}{{2}{4}{Engineered features and the columns they replace}{table.caption.10}{}}
 \citation{saito2015}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Engineered features and the columns they replace.}}{5}{table.caption.10}\protected@file@percent }
-\newlabel{tab:features}{{2}{5}{Engineered features and the columns they replace}{table.caption.10}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Class Imbalance}{5}{section.3}\protected@file@percent }
 \newlabel{sec:imbalance}{{3}{5}{Class Imbalance}{section.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Metrics}{5}{subsection.3.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Chosen remedy}{5}{subsection.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Modelling Progression}{6}{section.4}\protected@file@percent }
-\newlabel{sec:models}{{4}{6}{Modelling Progression}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Evaluation protocol}{6}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Modelling Progression}{5}{section.4}\protected@file@percent }
+\newlabel{sec:models}{{4}{5}{Modelling Progression}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Evaluation protocol}{5}{subsection.4.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Models}{6}{subsection.4.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Baseline: logistic regression.}{6}{section*.11}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Random forest.}{6}{section*.12}\protected@file@percent }
@@ -44,17 +44,41 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Results}{6}{subsection.4.3}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Mean scores over 5-fold cross-validation on the training set (default hyperparameters, threshold 0.5). The last column is the PR-AUC on the training folds.}}{6}{table.caption.14}\protected@file@percent }
 \newlabel{tab:models}{{3}{6}{Mean scores over 5-fold cross-validation on the training set (default hyperparameters, threshold 0.5). The last column is the PR-AUC on the training folds}{table.caption.14}{}}
-\bibcite{kohavi1996}{1}
-\bibcite{rubin1976}{2}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Precision--recall curves from out-of-fold predictions (5-fold cross-validation on the training set). AP is the average precision, i.e.\ the PR-AUC. The dashed line is the score of a random model.}}{7}{figure.caption.15}\protected@file@percent }
-\newlabel{fig:pr}{{2}{7}{Precision--recall curves from out-of-fold predictions (5-fold cross-validation on the training set). AP is the average precision, i.e.\ the PR-AUC. The dashed line is the score of a random model}{figure.caption.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Precision--recall curves from out-of-fold predictions (5-fold cross-validation on the training set). AP is the average precision, i.e.\ the PR-AUC. The dashed line is the score of a random model.}}{6}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:pr}{{2}{6}{Precision--recall curves from out-of-fold predictions (5-fold cross-validation on the training set). AP is the average precision, i.e.\ the PR-AUC. The dashed line is the score of a random model}{figure.caption.15}{}}
 \@writefile{toc}{\contentsline {paragraph}{Ranking of the models.}{7}{section*.16}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Overfitting.}{7}{section*.17}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Decisions at the default threshold.}{7}{section*.18}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Conclusion.}{7}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Pipeline}{7}{section.5}\protected@file@percent }
+\newlabel{sec:pipeline}{{5}{7}{Pipeline}{section.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Steps of the pipeline.}}{7}{table.caption.20}\protected@file@percent }
+\newlabel{tab:pipeline}{{4}{7}{Steps of the pipeline}{table.caption.20}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Hyperparameter Tuning}{8}{section.6}\protected@file@percent }
+\newlabel{sec:tuning}{{6}{8}{Hyperparameter Tuning}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Method}{8}{subsection.6.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Search space of each model. The default values are those of Section~\ref {sec:models}.}}{8}{table.caption.21}\protected@file@percent }
+\newlabel{tab:space}{{5}{8}{Search space of each model. The default values are those of Section~\ref {sec:models}}{table.caption.21}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Results}{9}{subsection.6.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Default and tuned models (5-fold cross-validation on the training set, threshold 0.5). Default scores come from Table~\ref {tab:models}.}}{9}{table.caption.22}\protected@file@percent }
+\newlabel{tab:tuning}{{6}{9}{Default and tuned models (5-fold cross-validation on the training set, threshold 0.5). Default scores come from Table~\ref {tab:models}}{table.caption.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Default and tuned models (5-fold cross-validation). Left: cross-validated and training PR-AUC; the gap between the two shows overfitting. Right: precision and recall at the threshold of 0.5.}}{9}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:tuned}{{3}{9}{Default and tuned models (5-fold cross-validation). Left: cross-validated and training PR-AUC; the gap between the two shows overfitting. Right: precision and recall at the threshold of 0.5}{figure.caption.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Cross-validated PR-AUC of each Optuna trial. The black line is the best value found so far.}}{9}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:optuna}{{4}{9}{Cross-validated PR-AUC of each Optuna trial. The black line is the best value found so far}{figure.caption.24}{}}
+\@writefile{toc}{\contentsline {paragraph}{Logistic regression.}{10}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Random forest.}{10}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{LightGBM.}{10}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Role of the class weight.}{10}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Number of trials.}{10}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Choice of the model.}{10}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Experiment Tracking}{10}{section.7}\protected@file@percent }
+\newlabel{sec:tracking}{{7}{10}{Experiment Tracking}{section.7}{}}
+\bibcite{kohavi1996}{1}
+\bibcite{rubin1976}{2}
 \bibcite{saito2015}{3}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Figures}{8}{appendix.A}\protected@file@percent }
-\newlabel{app:figures}{{A}{8}{Additional Figures}{appendix.A}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Non-zero net capital income (capital gain minus capital loss, training set) before and after the signed log transform. The transform compresses the long right tail; the two groups after the transform correspond to losses (negative values) and gains.}}{8}{figure.caption.21}\protected@file@percent }
-\newlabel{fig:capital}{{3}{8}{Non-zero net capital income (capital gain minus capital loss, training set) before and after the signed log transform. The transform compresses the long right tail; the two groups after the transform correspond to losses (negative values) and gains}{figure.caption.21}{}}
-\gdef \@abspage@last{8}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Figures}{11}{appendix.A}\protected@file@percent }
+\newlabel{app:figures}{{A}{11}{Additional Figures}{appendix.A}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Non-zero net capital income (capital gain minus capital loss, training set) before and after the signed log transform. The transform compresses the long right tail; the two groups after the transform correspond to losses (negative values) and gains.}}{11}{figure.caption.32}\protected@file@percent }
+\newlabel{fig:capital}{{5}{11}{Non-zero net capital income (capital gain minus capital loss, training set) before and after the signed log transform. The transform compresses the long right tail; the two groups after the transform correspond to losses (negative values) and gains}{figure.caption.32}{}}
+\gdef \@abspage@last{11}

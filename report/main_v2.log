@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.10.11)  14 OCT 2026 00:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.10.11)  17 OCT 2026 21:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -287,24 +287,24 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 ) (./main_v2.aux)
 \openout1 = `main_v2.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -362,7 +362,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 20.
+Package hyperref Info: Link coloring OFF on input line 30.
  (./main_v2.out) (./main_v2.out)
 \@outlinefile=\write3
 \openout3 = `main_v2.out'.
@@ -370,59 +370,70 @@ Package hyperref Info: Link coloring OFF on input line 20.
  [1
 
 {/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-<figures/rate_workclass.pdf, id=100, 433.62pt x 302.8113pt>
+<figures/rate_workclass.pdf, id=120, 433.62pt x 302.8113pt>
 File: figures/rate_workclass.pdf Graphic file (type pdf)
 <use figures/rate_workclass.pdf>
-Package pdftex.def Info: figures/rate_workclass.pdf  used on input line 127.
+Package pdftex.def Info: figures/rate_workclass.pdf  used on input line 137.
 (pdftex.def)             Requested size: 223.07211pt x 155.7809pt.
-<figures/hist_hours_per_week.pdf, id=101, 433.62pt x 289.08pt>
+<figures/hist_hours_per_week.pdf, id=121, 433.62pt x 289.08pt>
 File: figures/hist_hours_per_week.pdf Graphic file (type pdf)
 <use figures/hist_hours_per_week.pdf>
-Package pdftex.def Info: figures/hist_hours_per_week.pdf  used on input line 132.
+Package pdftex.def Info: figures/hist_hours_per_week.pdf  used on input line 142.
 (pdftex.def)             Requested size: 223.07211pt x 148.71686pt.
-<figures/hist_age.pdf, id=102, 433.62pt x 289.08pt>
+<figures/hist_age.pdf, id=122, 433.62pt x 289.08pt>
 File: figures/hist_age.pdf Graphic file (type pdf)
 <use figures/hist_age.pdf>
-Package pdftex.def Info: figures/hist_age.pdf  used on input line 138.
+Package pdftex.def Info: figures/hist_age.pdf  used on input line 148.
 (pdftex.def)             Requested size: 223.07211pt x 148.71686pt.
-<figures/rate_marital_status.pdf, id=103, 433.62pt x 289.08pt>
+<figures/rate_marital_status.pdf, id=123, 433.62pt x 289.08pt>
 File: figures/rate_marital_status.pdf Graphic file (type pdf)
 <use figures/rate_marital_status.pdf>
-Package pdftex.def Info: figures/rate_marital_status.pdf  used on input line 143.
+Package pdftex.def Info: figures/rate_marital_status.pdf  used on input line 153.
 (pdftex.def)             Requested size: 223.07211pt x 148.71686pt.
  [2] [3 <./figures/rate_workclass.pdf> <./figures/hist_hours_per_week.pdf> <./figures/hist_age.pdf> <./figures/rate_marital_status.pdf>] [4] [5]
-<figures/pr_curves.pdf, id=337, 433.62pt x 325.215pt>
+<figures/pr_curves.pdf, id=358, 433.62pt x 325.215pt>
 File: figures/pr_curves.pdf Graphic file (type pdf)
 <use figures/pr_curves.pdf>
-Package pdftex.def Info: figures/pr_curves.pdf  used on input line 367.
+Package pdftex.def Info: figures/pr_curves.pdf  used on input line 377.
 (pdftex.def)             Requested size: 273.14923pt x 204.87164pt.
- [6] [7 <./figures/pr_curves.pdf>]
-<figures/capital_net_transform.pdf, id=408, 722.7pt x 252.945pt>
+ [6 <./figures/pr_curves.pdf>] [7] [8]
+<figures/default_vs_tuned.pdf, id=451, 722.7pt x 310.761pt>
+File: figures/default_vs_tuned.pdf Graphic file (type pdf)
+<use figures/default_vs_tuned.pdf>
+Package pdftex.def Info: figures/default_vs_tuned.pdf  used on input line 551.
+(pdftex.def)             Requested size: 409.71692pt x 176.17775pt.
+<figures/optuna_history.pdf, id=452, 867.24pt x 252.945pt>
+File: figures/optuna_history.pdf Graphic file (type pdf)
+<use figures/optuna_history.pdf>
+Package pdftex.def Info: figures/optuna_history.pdf  used on input line 560.
+(pdftex.def)             Requested size: 455.24411pt x 132.77881pt.
+ [9 <./figures/default_vs_tuned.pdf> <./figures/optuna_history.pdf>] [10]
+<figures/capital_net_transform.pdf, id=585, 722.7pt x 252.945pt>
 File: figures/capital_net_transform.pdf Graphic file (type pdf)
 <use figures/capital_net_transform.pdf>
-Package pdftex.def Info: figures/capital_net_transform.pdf  used on input line 419.
+Package pdftex.def Info: figures/capital_net_transform.pdf  used on input line 650.
 (pdftex.def)             Requested size: 409.71692pt x 143.4005pt.
- [8 <./figures/capital_net_transform.pdf>] (./main_v2.aux)
+ [11 <./figures/capital_net_transform.pdf>] (./main_v2.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main_v2.out' has not changed.
-(rerunfilecheck)             Checksum: ADABAFFADED56F6DCC93881E066EF1E3;2833.
+(rerunfilecheck)             Checksum: 0FD58325A343C5484DF02B5DA262E7E5;3392.
  ) 
 Here is how much of TeX's memory you used:
- 11350 strings out of 467525
- 180346 string characters out of 5418981
- 606281 words of memory out of 5000000
- 40099 multiletter control sequences out of 15000+600000
+ 11399 strings out of 467525
+ 181328 string characters out of 5418981
+ 611072 words of memory out of 5000000
+ 40129 multiletter control sequences out of 15000+600000
  635575 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,603b,565s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on main_v2.pdf (8 pages, 299785 bytes).
+ 75i,12n,79p,603b,557s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
+Output written on main_v2.pdf (11 pages, 360911 bytes).
 PDF statistics:
- 520 PDF objects out of 1000 (max. 8388607)
- 224 compressed objects within 3 object streams
- 51 named destinations out of 1000 (max. 500000)
- 175 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 706 PDF objects out of 1000 (max. 8388607)
+ 304 compressed objects within 4 object streams
+ 70 named destinations out of 1000 (max. 500000)
+ 225 words of extra memory for PDF output out of 10000 (max. 10000000)
 

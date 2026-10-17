@@ -10,6 +10,16 @@
 
 \setlength{\emergencystretch}{1.5em}
 
+% Float placement: allow large figures and tables on text pages,
+% and put any page made only of floats at the top instead of centring it
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.8}
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
+
 \newcommand{\high}{$>$50K}
 \newcommand{\low}{$\leq$50K}
 
@@ -317,8 +327,8 @@ not useful.
 
 \subsection{Evaluation protocol}
 The goal of this section is to choose the model family, not its final settings. All
-models therefore keep their default hyperparameters. Each model is placed in the same pipeline
-(Section~2) and evaluated with 5-fold stratified cross-validation on the training set. The
+models therefore keep their default hyperparameters. Each model is placed in the same pipeline (Section~\ref{sec:pipeline})
+and evaluated with 5-fold stratified cross-validation on the training set. The
 training set is split into five parts that keep the class ratio. Each part is used once
 for evaluation, while the model is trained on the other four. We report the mean score
 over the five folds. To detect overfitting, we also compute the PR-AUC on the training
@@ -356,7 +366,7 @@ training folds.}
 Model & Precision & Recall & F1 & ROC-AUC & PR-AUC & Train PR-AUC \\
 \midrule
 Logistic regression & 0.700 & 0.566 & 0.626 & 0.890 & 0.709 & 0.711 \\
-Random forest       & 0.693 & 0.617 & 0.653 & 0.889 & 0.731 & 0.991 \\
+Random forest       & 0.695 & 0.618 & 0.654 & 0.889 & 0.731 & 0.991 \\
 LightGBM            & \textbf{0.781} & \textbf{0.658} & \textbf{0.714} & \textbf{0.929} & \textbf{0.830} & 0.860 \\
 \bottomrule
 \end{tabular}
@@ -389,7 +399,7 @@ data almost by heart. This overfitting probably explains why it barely beats the
 despite its flexibility. LightGBM shows a moderate gap (0.860 against 0.830). By default,
 its trees are limited to 31 leaves and each tree only corrects part of the error, which
 keeps its complexity under control. LightGBM is also the most stable model across folds:
-the standard deviation of its PR-AUC is 0.002, against 0.007 for the random forest and
+the standard deviation of its PR-AUC is 0.002, against 0.006 for the random forest and
 0.009 for the logistic regression.
 
 \paragraph{Decisions at the default threshold.}
@@ -399,9 +409,230 @@ earners dominate the training loss, so the models predict \low{} too often. This
 precisely what the tuning of $w$ will address (Section~3.2).
 
 \paragraph{Conclusion.}
-LightGBM is our main candidate. The random forest is still kept for tuning: its gap
-between training and cross-validation suggests that limiting the growth of its trees
-could improve it.
+LightGBM is our main candidate. All three models are nevertheless tuned in
+Section~\ref{sec:tuning}, so that each model family is compared at its best. The random
+forest in particular should benefit from tuning: its gap between training and
+cross-validation suggests that limiting the growth of its trees could improve it.
+
+%=====================================================================
+\section{Pipeline}
+\label{sec:pipeline}
+%=====================================================================
+All preparation steps and the model are wrapped in a single scikit-learn
+\texttt{Pipeline} (function \texttt{build\_pipeline} in \texttt{src/pipeline.py}). The
+pipeline takes the raw data as input and returns a prediction. It chains the three steps
+of Table~\ref{tab:pipeline}.
+
+\begin{table}[htbp]
+\centering
+\caption{Steps of the pipeline.}
+\label{tab:pipeline}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{7.4cm}>{\raggedright\arraybackslash}p{3.6cm}}
+\toprule
+Step & What it does & Learned from the data \\
+\midrule
+1. Feature engineering & Creates \texttt{capital\_net}, \texttt{is\_married} and
+\texttt{native\_us}, and removes the columns they replace (Section~\ref{sec:features}) &
+Nothing \\
+\addlinespace
+2. Preprocessing & Numerical features: imputation with the most frequent value, then
+standardisation. Categorical features: \texttt{Missing} category, then one-hot encoding &
+Most frequent values, means, standard deviations, list of categories \\
+\addlinespace
+3. Model & Logistic regression, random forest or LightGBM & The model parameters \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Using a single pipeline has three benefits. First, it prevents data leakage. During
+cross-validation, the whole pipeline is fitted again on the training folds of each split.
+The values learned in steps 2 and 3, such as means or most frequent values, therefore
+never use the evaluation fold. Step 1 learns nothing, because each new value only uses
+the person's own row, but placing it in the pipeline means that new raw data are
+processed automatically. Second, the three models receive exactly the same input, so the
+comparisons of Sections~\ref{sec:models} and~\ref{sec:tuning} only reflect the models.
+Third, the fitted pipeline is a single object that can be saved and used to serve
+predictions on raw data.
+
+Moving feature engineering into the pipeline does not change any result: the scores of
+Table~\ref{tab:models} are identical with both versions of the code.
+
+%=====================================================================
+\section{Hyperparameter Tuning}
+\label{sec:tuning}
+%=====================================================================
+
+\subsection{Method}
+We tune the three models with Optuna (\texttt{src/tune.py}). For each model, Optuna runs
+a study of 30 trials. Each trial proposes a set of hyperparameters, and the
+corresponding pipeline is scored with the same 5-fold stratified cross-validation as in
+Section~\ref{sec:models}, on the training set only. The objective is the mean
+cross-validated PR-AUC, our main metric (Section~3.1). Optuna uses its default sampler
+(TPE), which proposes new values close to the best trials found so far. We fix its random
+seed, so the study gives the same results at every run.
+
+All models receive the same budget of 30 trials, so that each model family has the same
+chance to find good settings. For every model, we tune the class weight $w$ between 1 and
+$n_0/n_1 = 3.18$, as announced in Section~3.2. Besides $w$, we tune only a few main
+hyperparameters per model, to keep the search space small for a budget of 30 trials. We
+also avoid redundant hyperparameters: \texttt{min\_samples\_leaf} and
+\texttt{min\_samples\_split} both limit the growth of the trees, so we tune only the
+first one. Table~\ref{tab:space} gives the search space. Each range starts from the
+default value of the hyperparameter and extends in the direction suggested by
+Section~\ref{sec:models}.
+
+\begin{table}[htbp]
+\centering
+\caption{Search space of each model. The default values are those of
+Section~\ref{sec:models}.}
+\label{tab:space}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}p{1.9cm}>{\raggedright\arraybackslash}p{5.3cm}}
+\toprule
+Model & Hyperparameter & Default & Range & Justification of the range \\
+\midrule
+All & $w$ & 1 & 1 to 3.18 & From no weighting to full rebalancing ($n_0/n_1$) \\
+\addlinespace
+Log.\ reg. & \texttt{C} (log scale) & 1 & 0.001 to 10 & From 1000 times smaller to 10
+times larger than the default. \texttt{C} is the inverse of the regularisation strength:
+above 10, the regularisation almost vanishes \\
+\addlinespace
+Random forest & \texttt{n\_estimators} & 100 & 100 to 500 & From the default to 5 times
+the default. More trees do not cause overfitting, they only cost time \\
+ & \texttt{max\_depth} & Unlimited & 5 to 30 & Only shallower trees than the default,
+which overfits (Section~\ref{sec:models}) \\
+ & \texttt{min\_samples\_leaf} & 1 & 1 to 20 & Only larger leaves than the default, for
+the same reason \\
+ & \texttt{max\_features} & $\sqrt{58} \approx 7$ & 4 to 28 & From about half to 4 times
+the default (58 features after encoding) \\
+\addlinespace
+LightGBM & \texttt{n\_estimators} & 100 & 50 to 1000 & From half to 10 times the
+default: a lower learning rate needs more trees \\
+ & \texttt{num\_leaves} & 31 & 7 to 63 & From a quarter to twice the default \\
+ & \texttt{learning\_rate} (log scale) & 0.1 & 0.01 to 0.2 & From 10 times smaller to
+twice the default \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Results}
+Table~\ref{tab:tuning} and Figure~\ref{fig:tuned} compare the default and tuned versions
+of each model. For every model, the best values lie strictly inside their ranges, so the
+ranges did not limit the search. Figure~\ref{fig:optuna} shows the score of every trial.
+
+\begin{table}[htbp]
+\centering
+\caption{Default and tuned models (5-fold cross-validation on the training set,
+threshold 0.5). Default scores come from Table~\ref{tab:models}.}
+\label{tab:tuning}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llccccc>{\raggedright\arraybackslash}p{3.4cm}}
+\toprule
+Model & Version & Prec. & Recall & F1 & PR-AUC & Train PR-AUC & Best hyperparameters \\
+\midrule
+Log.\ regression & Default & 0.700 & 0.566 & 0.626 & 0.709 & 0.711 & \\
+ & Tuned & 0.699 & 0.571 & 0.628 & 0.709 & 0.711 & $w = 1.02$, \texttt{C} $= 4.05$ \\
+\addlinespace
+Random forest & Default & 0.695 & 0.618 & 0.654 & 0.731 & 0.991 & \\
+ & Tuned & 0.666 & 0.761 & 0.710 & 0.809 & 0.886 & $w = 2.05$, 400 trees, depth 18,
+ 3 per leaf, 25 features \\
+\addlinespace
+LightGBM & Default & 0.781 & 0.658 & 0.714 & 0.830 & 0.860 & \\
+ & Tuned & 0.750 & 0.702 & \textbf{0.725} & \textbf{0.832} & 0.861 & $w = 1.31$, 550
+ trees, 9 leaves, rate 0.083 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\linewidth]{figures/default_vs_tuned.pdf}
+\caption{Default and tuned models (5-fold cross-validation). Left: cross-validated and
+training PR-AUC; the gap between the two shows overfitting. Right: precision and recall
+at the threshold of 0.5.}
+\label{fig:tuned}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/optuna_history.pdf}
+\caption{Cross-validated PR-AUC of each Optuna trial. The black line is the best value
+found so far.}
+\label{fig:optuna}
+\end{figure}
+
+\paragraph{Logistic regression.}
+Tuning brings no gain: the PR-AUC stays at 0.709. Optuna also selects almost no
+weighting ($w = 1.02$) and a weak regularisation. This confirms the diagnosis of
+Section~\ref{sec:models}: the model does not overfit, and its score is limited by its
+linear form, which no hyperparameter can change.
+
+\paragraph{Random forest.}
+The random forest benefits most from tuning: its PR-AUC rises from 0.731 to 0.809
+(Figure~\ref{fig:tuned}, left). The gap between training and cross-validation falls from
+26 points (0.991 against 0.731) to 8 points (0.886 against 0.809). The tuned trees are
+shallower (depth 18) and keep at least 3 observations per leaf, so they no longer learn
+individual training rows, as expected in Section~\ref{sec:models}. Optuna also selects
+25 features per split, far above the default of 7.
+
+\paragraph{LightGBM.}
+The PR-AUC barely changes (0.830 to 0.832): the default settings were already close to the
+best ones. The tuned model uses very small trees (9 leaves) with many boosting steps, and
+its gap between training and cross-validation stays at about 3 points (0.861 against
+0.832). The main change is at the default threshold: with $w = 1.31$, recall rises from
+0.658 to 0.702, while precision falls from 0.781 to 0.750, and F1 improves slightly.
+
+\paragraph{Role of the class weight.}
+Optuna selects weights between 1.02 and 2.05, below full rebalancing (3.18).
+Figure~\ref{fig:tuned} (right) shows the effect of $w$: the larger the weight, the more
+recall rises and precision falls. The random forest has the largest weight and the
+largest gain in recall (0.618 to 0.761), while the logistic regression, with $w$ close to
+1, does not change. On the other hand, $w$ has little effect on PR-AUC, which does not
+depend on the threshold. For example, the eight best LightGBM trials all reach a PR-AUC
+of 0.831 or 0.832, with $w$ between 1.18 and 1.99. The selected value of $w$ is therefore
+one of many equivalent choices, and should be read with caution.
+
+\paragraph{Number of trials.}
+Figure~\ref{fig:optuna} shows that the scores level off quickly. For the logistic
+regression and LightGBM, the trials after the first 15 improve the best PR-AUC by less
+than 0.001. The random forest still improves slightly after 15 trials (+0.002), and its
+best trial is one of the last ones. More trials could therefore add a little to its
+score, but this gain is small compared with its gap to LightGBM (2.3 points). A budget
+of 30 trials is therefore sufficient to compare the three models.
+
+\paragraph{Choice of the model.}
+LightGBM remains the best model after tuning (PR-AUC of 0.832, against 0.809 for the
+random forest and 0.709 for the logistic regression), so it is our final model. This
+choice relies on cross-validation only. Note that the best cross-validated score is
+slightly optimistic: the best of 30 trials is chosen and scored on the same folds. The
+unbiased estimate of the final model will come from the untouched test set, which is only
+used in the final evaluation.
+
+%=====================================================================
+\section{Experiment Tracking}
+\label{sec:tracking}
+%=====================================================================
+All tuning runs are logged with MLflow, in a local database (\texttt{mlflow.db}). The
+experiment contains 94 runs, organised as follows:
+\begin{itemize}
+\item \textbf{One run per model} (3 runs). It stores the best hyperparameters and the
+cross-validated metrics of the best trial, and the file \texttt{best\_params.json} as an
+artifact.
+\item \textbf{One run per trial} (90 runs), nested in the run of its model. Each one
+stores the hyperparameters of the trial, including $w$, and all the metrics of
+Section~3.1: precision, recall, F1, ROC-AUC and PR-AUC in cross-validation, the standard
+deviation of PR-AUC across folds, and the training PR-AUC.
+\item \textbf{One summary run}. It stores, as artifacts, the comparison table
+(\texttt{tuning\_results.csv}), the best hyperparameters of the three models, and
+Figures~\ref{fig:tuned} and~\ref{fig:optuna}.
+\end{itemize}
+
+This tracking makes every result of Section~\ref{sec:tuning} traceable: any trial can be
+found with its exact settings and scores, and the trials can be compared in the MLflow
+interface. The best hyperparameters are also saved in \texttt{results/best\_params.json},
+which the next steps use to rebuild the final model.
 
 %=====================================================================
 \begin{thebibliography}{9}
