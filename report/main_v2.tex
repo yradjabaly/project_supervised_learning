@@ -1,5 +1,5 @@
-\documentclass[11pt,a4paper]{article}
-\usepackage[margin=2.5cm]{geometry}
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=2cm]{geometry}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{array}
@@ -7,11 +7,10 @@
 \usepackage{float}
 \usepackage{subcaption}
 \usepackage[hidelinks]{hyperref}
+\usepackage{wrapfig}
 
 \setlength{\emergencystretch}{1.5em}
 
-% Float placement: allow large figures and tables on text pages,
-% and put any page made only of floats at the top instead of centring it
 \renewcommand{\topfraction}{0.9}
 \renewcommand{\bottomfraction}{0.8}
 \renewcommand{\textfraction}{0.07}
@@ -24,7 +23,7 @@
 \newcommand{\low}{$\leq$50K}
 
 \title{Predicting Income from Census Data:\\ A Supervised Learning Proof-of-Concept}
-\author{Group members: [Names]}
+\author{Group members: Yohan RADJABALY, Yoanna MOURDJEE, Yu-Tung CHENG}
 \date{\today}
 
 \begin{document}
@@ -113,7 +112,7 @@ exactly 40 hours, so $Q_1 = 40$, $Q_3 = 45$, and the bounds are 32.5 and 52.5 ho
 Figure~\ref{fig:eda}b shows, the rule then flags wrongly normal part-time jobs and long working
 weeks. Regarding capital income, most values are zero (91.7\%
 for gains and 95.3\% for losses). Therefore, $Q_1 = Q_3 = 0$ and every non-zero value would be
-flagged. The non-zero values are also very skewed (handled in section 2.2): the median gain is 7{,}298, but the
+flagged. The non-zero values are also very skewed (handled in Section~2.2): the median gain is 7{,}298, but the
 maximum is 99{,}999 (Appendix~\ref{app:figures}).
 
 Second, the maximum values show that some variables are capped. 54 people are exactly 90
@@ -134,23 +133,27 @@ three men as a \texttt{Wife}.
 \begin{figure}[htbp]
 \centering
 \begin{subfigure}{0.49\linewidth}
-\includegraphics[width=\linewidth]{figures/rate_workclass.pdf}
+\centering
+\includegraphics[width=0.85\linewidth]{figures/rate_workclass.pdf}
 \caption{Share of \high{} by work class}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.49\linewidth}
-\includegraphics[width=\linewidth]{figures/hist_hours_per_week.pdf}
+\centering
+\includegraphics[width=0.85\linewidth]{figures/hist_hours_per_week.pdf}
 \caption{Weekly hours by class}
 \end{subfigure}
 
 \medskip
 \begin{subfigure}{0.49\linewidth}
-\includegraphics[width=\linewidth]{figures/hist_age.pdf}
+\centering
+\includegraphics[width=0.85\linewidth]{figures/hist_age.pdf}
 \caption{Age by class}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.49\linewidth}
-\includegraphics[width=\linewidth]{figures/rate_marital_status.pdf}
+\centering
+\includegraphics[width=0.85\linewidth]{figures/rate_marital_status.pdf}
 \caption{Share of \high{} by marital status}
 \end{subfigure}
 \caption{Exploratory analysis on the training set. (a) and (d): share of people earning
@@ -182,7 +185,7 @@ of the others.
 \paragraph{Sex.}
 The share of high earners differs by sex: 30.3\% for men against 11.1\% for women. In
 addition, \texttt{relationship} is closely linked to sex: a \texttt{Husband} is a man in
-all cases but one, and a \texttt{Wife} is a woman in all cases but three. This link will be important for our fairness audit.
+all cases but one, and a \texttt{Wife} is a woman in all cases but three.
 
 %=====================================================================
 \section{Data Preparation and Feature Engineering}
@@ -196,7 +199,7 @@ Replacing them with the most frequent value (\texttt{Private}) would mix two gro
 different incomes (9.4\% against 21.9\%). We therefore keep them as a separate category,
 called \texttt{Missing}, in both columns. The model can then learn what the absence means.
 
-For \texttt{native\_country}, the share of high earners (25,1\%) is similar to the overall share (23,9\%), 
+For \texttt{native\_country}, the share of high earners (25.1\%) is similar to the overall share (23.9\%), 
 which suggests that this missingness is unrelated to the target, and it concerns only 1.8\% of rows. 
 We therefore replace these values with the most frequent country, the United States,
 which covers 91.4\% of people whose country is known. It is the most likely value, so the
@@ -265,17 +268,15 @@ follow education (see below). \\
 \end{tabular}
 \end{table}
 
-Reducing \texttt{native\_country} to a binary \texttt{native\_us} indicator may appear to discard information. For instance,
-5.1\% of people born in Mexico earn \high{}, against 42.9\% of people born in India. 
-However, we still keep a single indicator for two reasons. First,
-most countries are too small: 17 countries have fewer than 50 people, so their rates are
-unreliable. Second, the gaps between countries mostly follow education. Across the 24
-countries with at least 50 people, the share of high earners and the share of university
-graduates (\texttt{Bachelors} or higher) have a correlation of 0.87. Since education is
-already in the model, a detailed country variable would add little. The indicator still
-keeps the main difference: 24.4\% of people born in the United States earn \high{},
-against 18.4\% of the others. Note that this correlation is computed on country
-averages, so it shows an association, not a causal link.
+Reducing \texttt{native\_country} to \texttt{native\_us} may seem to discard
+information: for instance, 5.1\% of people born in Mexico earn \high{}, against 42.9\% of
+people born in India. However, 17 countries have fewer than 50 people, so their rates are
+unreliable. Moreover, across the 24 countries with at least 50 people, the share of high
+earners and the share of university graduates have a correlation of 0.87 (an
+association between country averages, not a causal link). Since education is already in
+the model, a detailed country variable would add little. The indicator keeps the main
+difference: 24.4\% of people born in the United States earn \high{}, against 18.4\% of
+the others.
 
 %=====================================================================
 \section{Class Imbalance}
@@ -310,9 +311,8 @@ the data and works inside the pipeline without any risk of leakage.
 
 In the code, the weight is passed to each model as \verb|class_weight={0: 1, 1: w}|:
 an error on a high earner counts $w$ times more than an error on a low earner. This is
-equivalent to the \texttt{scale\_pos\_weight} parameter seen in class. We use
-\texttt{class\_weight} because it is available in all three of our models, so the
-imbalance is handled in the same way for each of them.
+equivalent to the \texttt{scale\_pos\_weight} parameter seen in class, but \texttt{class\_weight} 
+is available in all three of our models.
 
 The best value of $w$ is not known in advance. We therefore treat it as a hyperparameter
 and tune it with Optuna (Section~6), between 1 and $n_0/n_1 \approx 3.18$, where $n_0$
@@ -332,8 +332,7 @@ and evaluated with 5-fold stratified cross-validation on the training set. The
 training set is split into five parts that keep the class ratio. Each part is used once
 for evaluation, while the model is trained on the other four. We report the mean score
 over the five folds. To detect overfitting, we also compute the PR-AUC on the training
-folds: a large gap with the cross-validated PR-AUC means that the model fits the training
-data too closely.
+folds.
 
 \subsection{Models}
 We compare three models of increasing flexibility.
@@ -354,31 +353,37 @@ scikit-learn models, so that the imbalance is handled identically for all models
 
 \subsection{Results}
 
-\begin{table}[htbp]
-\centering
-\caption{Mean scores over 5-fold cross-validation on the training set (default
-hyperparameters, threshold 0.5). The last column is the PR-AUC on the
-training folds.}
-\label{tab:models}
-\small
-\begin{tabular}{lcccccc}
-\toprule
-Model & Precision & Recall & F1 & ROC-AUC & PR-AUC & Train PR-AUC \\
-\midrule
-Logistic regression & 0.700 & 0.566 & 0.626 & 0.890 & 0.709 & 0.711 \\
-Random forest       & 0.695 & 0.618 & 0.654 & 0.889 & 0.731 & 0.991 \\
-LightGBM            & \textbf{0.781} & \textbf{0.658} & \textbf{0.714} & \textbf{0.929} & \textbf{0.830} & 0.860 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.6\linewidth]{figures/pr_curves.pdf}
+\begin{minipage}[c]{0.47\linewidth}
+\centering
+\captionof{table}{Mean scores over 5-fold cross-validation on the training set (default
+hyperparameters, threshold 0.5). Train PR-AUC is computed on the training folds.}
+\label{tab:models}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccc}
+\toprule
+ & Log.\ reg. & Rand.\ forest & LightGBM \\
+\midrule
+Precision    & 0.700 & 0.695 & \textbf{0.781} \\
+Recall       & 0.566 & 0.618 & \textbf{0.658} \\
+F1           & 0.626 & 0.654 & \textbf{0.714} \\
+ROC-AUC      & 0.890 & 0.889 & \textbf{0.929} \\
+PR-AUC       & 0.709 & 0.731 & \textbf{0.830} \\
+\addlinespace
+Train PR-AUC & 0.711 & 0.991 & 0.860 \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.49\linewidth}
+\centering
+\includegraphics[width=0.85\linewidth]{figures/pr_curves.pdf}
 \caption{Precision--recall curves from out-of-fold predictions (5-fold cross-validation
-on the training set). AP is the average precision, i.e.\ the PR-AUC. The dashed line is
-the score of a random model.}
+on the training set). AP is the PR-AUC; the dashed line is a random model.}
 \label{fig:pr}
+\end{minipage}
 \end{figure}
 
 \paragraph{Ranking of the models.}
@@ -401,12 +406,6 @@ its trees are limited to 31 leaves and each tree only corrects part of the error
 keeps its complexity under control. LightGBM is also the most stable model across folds:
 the standard deviation of its PR-AUC is 0.002, against 0.006 for the random forest and
 0.009 for the logistic regression.
-
-\paragraph{Decisions at the default threshold.}
-For all three models, precision is higher than recall. At the threshold of 0.5, the models
-miss between 34\% and 43\% of high earners. This is expected without class weighting: low
-earners dominate the training loss, so the models predict \low{} too often. This is
-precisely what the tuning of $w$ will address (Section~3.2).
 
 \paragraph{Conclusion.}
 LightGBM is our main candidate. All three models are nevertheless tuned in
@@ -445,18 +444,8 @@ Most frequent values, means, standard deviations, list of categories \\
 \end{tabular}
 \end{table}
 
-Using a single pipeline has three benefits. First, it prevents data leakage. During
-cross-validation, the whole pipeline is fitted again on the training folds of each split.
-The values learned in steps 2 and 3, such as means or most frequent values, therefore
-never use the evaluation fold. Step 1 learns nothing, because each new value only uses
-the person's own row, but placing it in the pipeline means that new raw data are
-processed automatically. Second, the three models receive exactly the same input, so the
-comparisons of Sections~\ref{sec:models} and~\ref{sec:tuning} only reflect the models.
-Third, the fitted pipeline is a single object that can be saved and used to serve
+Using a single pipeline has three benefits: it prevents data leakage, the three models receive exactly the same input, and it is a single object that can be saved and used to serve
 predictions on raw data.
-
-Moving feature engineering into the pipeline does not change any result: the scores of
-Table~\ref{tab:models} are identical with both versions of the code.
 
 %=====================================================================
 \section{Hyperparameter Tuning}
@@ -472,15 +461,11 @@ cross-validated PR-AUC, our main metric (Section~3.1). Optuna uses its default s
 (TPE), which proposes new values close to the best trials found so far. We fix its random
 seed, so the study gives the same results at every run.
 
-All models receive the same budget of 30 trials, so that each model family has the same
-chance to find good settings. For every model, we tune the class weight $w$ between 1 and
-$n_0/n_1 = 3.18$, as announced in Section~3.2. Besides $w$, we tune only a few main
-hyperparameters per model, to keep the search space small for a budget of 30 trials. We
-also avoid redundant hyperparameters: \texttt{min\_samples\_leaf} and
-\texttt{min\_samples\_split} both limit the growth of the trees, so we tune only the
-first one. Table~\ref{tab:space} gives the search space. Each range starts from the
+Table~\ref{tab:space} gives the search space. Each range starts from the
 default value of the hyperparameter and extends in the direction suggested by
-Section~\ref{sec:models}.
+Section~\ref{sec:models}. We also carefully selected the hyperparameters to avoid redundancy: 
+for instance, \texttt{min\_samples\_leaf} and \texttt{min\_samples\_split} both limit the growth 
+of the trees, so we tune only the first one.
 
 \begin{table}[htbp]
 \centering
@@ -495,13 +480,12 @@ Model & Hyperparameter & Default & Range & Justification of the range \\
 All & $w$ & 1 & 1 to 3.18 & From no weighting to full rebalancing ($n_0/n_1$) \\
 \addlinespace
 Log.\ reg. & \texttt{C} (log scale) & 1 & 0.001 to 10 & From 1000 times smaller to 10
-times larger than the default. \texttt{C} is the inverse of the regularisation strength:
-above 10, the regularisation almost vanishes \\
+times larger than the default. \\
 \addlinespace
 Random forest & \texttt{n\_estimators} & 100 & 100 to 500 & From the default to 5 times
-the default. More trees do not cause overfitting, they only cost time \\
- & \texttt{max\_depth} & Unlimited & 5 to 30 & Only shallower trees than the default,
-which overfits (Section~\ref{sec:models}) \\
+the default (more trees do not cause overfitting) \\
+ & \texttt{max\_depth} & None (no limit) & 5 to 30 & Limits the depth of the trees,
+which is unlimited by default and leads to overfitting (Section~\ref{sec:models}) \\
  & \texttt{min\_samples\_leaf} & 1 & 1 to 20 & Only larger leaves than the default, for
 the same reason \\
  & \texttt{max\_features} & $\sqrt{58} \approx 7$ & 4 to 28 & From about half to 4 times
@@ -517,9 +501,11 @@ twice the default \\
 \end{table}
 
 \subsection{Results}
-Table~\ref{tab:tuning} and Figure~\ref{fig:tuned} compare the default and tuned versions
-of each model. For every model, the best values lie strictly inside their ranges, so the
-ranges did not limit the search. Figure~\ref{fig:optuna} shows the score of every trial.
+
+Table~\ref{tab:tuning} compares the default and tuned versions of each model (see also
+Figure~\ref{fig:tuned} in Appendix~\ref{app:figures}). For every model, the best values
+lie strictly inside their ranges, so the ranges did not limit the search.
+Figure~\ref{fig:optuna} (Appendix~\ref{app:figures}) shows the score of every trial.
 
 \begin{table}[htbp]
 \centering
@@ -546,32 +532,15 @@ LightGBM & Default & 0.781 & 0.658 & 0.714 & 0.830 & 0.860 & \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.9\linewidth]{figures/default_vs_tuned.pdf}
-\caption{Default and tuned models (5-fold cross-validation). Left: cross-validated and
-training PR-AUC; the gap between the two shows overfitting. Right: precision and recall
-at the threshold of 0.5.}
-\label{fig:tuned}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\linewidth]{figures/optuna_history.pdf}
-\caption{Cross-validated PR-AUC of each Optuna trial. The black line is the best value
-found so far.}
-\label{fig:optuna}
-\end{figure}
-
 \paragraph{Logistic regression.}
 Tuning brings no gain: the PR-AUC stays at 0.709. Optuna also selects almost no
 weighting ($w = 1.02$) and a weak regularisation. This confirms the diagnosis of
 Section~\ref{sec:models}: the model does not overfit, and its score is limited by its
-linear form, which no hyperparameter can change.
+linear form.
 
 \paragraph{Random forest.}
 The random forest benefits most from tuning: its PR-AUC rises from 0.731 to 0.809
-(Figure~\ref{fig:tuned}, left). The gap between training and cross-validation falls from
+(Table~\ref{tab:tuning}). The gap between training and cross-validation falls from
 26 points (0.991 against 0.731) to 8 points (0.886 against 0.809). The tuned trees are
 shallower (depth 18) and keep at least 3 observations per leaf, so they no longer learn
 individual training rows, as expected in Section~\ref{sec:models}. Optuna also selects
@@ -586,29 +555,23 @@ its gap between training and cross-validation stays at about 3 points (0.861 aga
 
 \paragraph{Role of the class weight.}
 Optuna selects weights between 1.02 and 2.05, below full rebalancing (3.18).
-Figure~\ref{fig:tuned} (right) shows the effect of $w$: the larger the weight, the more
-recall rises and precision falls. The random forest has the largest weight and the
-largest gain in recall (0.618 to 0.761), while the logistic regression, with $w$ close to
-1, does not change. On the other hand, $w$ has little effect on PR-AUC, which does not
-depend on the threshold. For example, the eight best LightGBM trials all reach a PR-AUC
-of 0.831 or 0.832, with $w$ between 1.18 and 1.99. The selected value of $w$ is therefore
-one of many equivalent choices, and should be read with caution.
+Table~\ref{tab:tuning} and Figure~\ref{fig:tuned} (Appendix~\ref{app:figures}) show the effect of $w$: for the random forest and LightGBM,
+recall rises and precision falls after tuning.
 
 \paragraph{Number of trials.}
-Figure~\ref{fig:optuna} shows that the scores level off quickly. For the logistic
+Figure~\ref{fig:optuna} (Appendix~\ref{app:figures}) shows that the scores level off quickly. For the logistic
 regression and LightGBM, the trials after the first 15 improve the best PR-AUC by less
 than 0.001. The random forest still improves slightly after 15 trials (+0.002), and its
 best trial is one of the last ones. More trials could therefore add a little to its
-score, but this gain is small compared with its gap to LightGBM (2.3 points). A budget
-of 30 trials is therefore sufficient to compare the three models.
+score, but this gain is small compared with its gap to LightGBM (2.3 points). 
+30 trials are therefore sufficient to compare the three models.
 
 \paragraph{Choice of the model.}
 LightGBM remains the best model after tuning (PR-AUC of 0.832, against 0.809 for the
-random forest and 0.709 for the logistic regression), so it is our final model. This
-choice relies on cross-validation only. Note that the best cross-validated score is
-slightly optimistic: the best of 30 trials is chosen and scored on the same folds. The
-unbiased estimate of the final model will come from the untouched test set, which is only
-used in the final evaluation.
+random forest and 0.709 for the logistic regression), so it is our final model. Note that the best cross-validated score is
+slightly optimistic: the best of 30 trials is chosen and scored on the same folds. The 
+unbiased estimate of the final model will come from the untouched test set
+(Section~\ref{sec:calibration}).
 
 %=====================================================================
 \section{Experiment Tracking}
@@ -629,10 +592,265 @@ deviation of PR-AUC across folds, and the training PR-AUC.
 Figures~\ref{fig:tuned} and~\ref{fig:optuna}.
 \end{itemize}
 
-This tracking makes every result of Section~\ref{sec:tuning} traceable: any trial can be
-found with its exact settings and scores, and the trials can be compared in the MLflow
-interface. The best hyperparameters are also saved in \texttt{results/best\_params.json},
-which the next steps use to rebuild the final model.
+%=====================================================================
+\section{Explainability with SHAP}
+\label{sec:shap}
+%=====================================================================
+We explain the final model with SHAP (\texttt{src/explain.py}). The tuned LightGBM is
+fitted on the whole training set, and SHAP values are computed for all 39,032 people of
+the training set with \texttt{TreeExplainer}. For each person, SHAP splits the model
+output into one contribution per feature, added to a baseline (the average output). For
+LightGBM, these contributions are on the log-odds scale, not on the probability scale.
+Since SHAP describes the model and does not evaluate it, the test set is not needed.
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}{0.49\linewidth}
+\includegraphics[width=\linewidth]{figures/shap_beeswarm.pdf}
+\caption{Global view: one point per person.}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.49\linewidth}
+\includegraphics[width=\linewidth]{figures/shap_waterfall.pdf}
+\caption{Local view: one person.}
+\end{subfigure}
+\caption{SHAP values of the final model on the training set (log-odds scale). In (a),
+the colour gives the value of the feature, and the horizontal position its effect on the
+prediction.}
+\label{fig:shap}
+\end{figure}
+
+\paragraph{Global explanation.}
+Figure~\ref{fig:shap}a ranks the features by their mean absolute SHAP value. The four
+numerical features dominate: \texttt{is\_married} (1.12), \texttt{age} (0.88),
+\texttt{capital\_net} (0.73) and \texttt{hours\_per\_week} (0.37). The directions are
+consistent with Section~1. Being married pushes the prediction up, and not being married
+pushes it down. Older people and people who work more hours receive higher predictions.
+Large capital gains have the strongest individual effects, up to about $+8$ in log-odds,
+but they concern few people. Among the one-hot columns, being a woman
+(\texttt{sex\_Female}, 0.18) and having only a high-school diploma
+(\texttt{education\_HS-grad}, 0.17) push the prediction down. The model therefore uses
+sex directly, which matters for fairness.
+Note that each categorical feature is split into several one-hot columns, so the total
+effect of \texttt{education} or \texttt{occupation} is spread over several rows of the
+figure.
+
+\paragraph{Local explanation.}
+Figure~\ref{fig:shap}b explains one prediction: the first high earner of the training
+set that the model predicts correctly. This person is a 44-year-old married man with a
+bachelor's degree, self-employed in sales, who works 50 hours per week and has no
+capital income. The baseline, i.e.\ the average output of the model over the training set,
+ is $-2.17$ in log-odds. Being married ($+1.14$), his age ($+0.69$), his degree ($+0.56$) 
+ and his working hours
+($+0.56$) raise the prediction. The absence of capital income ($-0.32$) and his type of
+employment ($-0.26$) lower it. The final output is $0.75$ in log-odds, which corresponds
+to a predicted probability of 0.68.
+
+\paragraph{Limits.}
+SHAP explains the fitted model, not the real world: a positive contribution of
+\texttt{is\_married} does not mean that getting married causes a higher income.
+
+%=====================================================================
+\section{Calibration and Final Evaluation}
+\label{sec:calibration}
+%=====================================================================
+
+\subsection{Method}
+A good PR-AUC means that the model ranks people well. It does not mean that a predicted
+probability of 0.3 corresponds to a 30\% chance of earning \high{}. We check this with
+three tools: the reliability diagram, the Brier score and the expected calibration error. 
+For the Brier score and the ECE, lower is better.
+
+We compare three versions of the final model (\texttt{src/calibration.py}): without
+calibration, with Platt scaling and with isotonic regression. In both cases, the calibrator is
+learned on out-of-fold predictions, i.e.\ on predictions for people the model did not
+train on. The three versions are compared with the same 5-fold cross-validation as
+before, on the training set only.
+
+\subsection{Results}
+
+\begin{table}[htbp]
+\centering
+\caption{Calibration of the final model (5-fold cross-validation on the training set).
+The observed share of \high{} is 0.239.}
+\label{tab:calibration}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+Version & Brier & ECE & Mean predicted prob. & PR-AUC & Precision & Recall \\
+\midrule
+Uncalibrated    & 0.0883 & 0.0229 & 0.262 & 0.832 & 0.750 & 0.702 \\
+Platt (sigmoid) & \textbf{0.0873} & 0.0033 & 0.240 & 0.832 & 0.787 & 0.652 \\
+Isotonic        & 0.0874 & \textbf{0.0029} & 0.240 & 0.830 & 0.782 & 0.660 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{wrapfigure}[19]{l}{0.42\linewidth}
+\centering
+\vspace{-1em}
+\includegraphics[width=\linewidth]{figures/reliability_cv.pdf}
+\caption{Reliability diagram (top) and distribution of the predicted probabilities
+(bottom, log scale), 5-fold cross-validation.}
+\label{fig:reliability}
+\end{wrapfigure}
+
+\paragraph{Diagnosis.}
+Without calibration, the model overestimates the probability of earning \high{}. Its
+mean predicted probability is 0.262, while the observed share is 0.239, and its curve
+lies below the diagonal in Figure~\ref{fig:reliability}. This is the expected effect of
+the class weight: with $w = 1.31$, errors on high earners cost more during training, which pushes the predictions upwards.
+
+\paragraph{Choice of the method.}
+Both methods bring the curve onto the diagonal and the mean prediction to 0.240. The ECE
+falls from 0.023 to about 0.003. Platt scaling has the lowest Brier score (0.0873). For
+simplicity and because results are very close, we keep Platt scaling.
+
+\paragraph{Effect on decisions.}
+Calibration lowers the probabilities but keeps the order of people, so the PR-AUC does
+not change (0.832). At the threshold of 0.5, however, some people now fall just below
+the threshold: recall falls from 0.702 to 0.652, and precision rises from 0.750 to
+0.787. This is not a loss of quality: because of $w$, the uncalibrated model predicted
+\high{} too often. After calibration, the threshold of 0.5 simply means that earning
+\high{} is more likely than not.
+
+\subsection{Final evaluation on the test set}
+The test set is used here for the first time (\texttt{src/evaluate.py}), and from now on
+only to measure: nothing is chosen from it. The final LightGBM is fitted on the whole 
+training set, with and without Platt scaling, and both versions are scored once. Nothing 
+is changed after this step.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[c]{0.5\linewidth}
+\centering
+\captionof{table}{Final evaluation on the untouched test set (9,758 people, threshold
+0.5).}
+\label{tab:test}
+\small
+\begin{tabular}{lcc}
+\toprule
+ & Uncalibrated & Platt (final) \\
+\midrule
+PR-AUC               & 0.822  & 0.822  \\
+ROC-AUC              & 0.926  & 0.926  \\
+Precision            & 0.730  & 0.771  \\
+Recall               & 0.691  & 0.639  \\
+F1                   & 0.710  & 0.699  \\
+Brier score          & 0.0913 & 0.0900 \\
+ECE                  & 0.0261 & 0.0059 \\
+Mean predicted prob. & 0.266  & 0.242  \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.44\linewidth}
+\centering
+\includegraphics[width=0.70\linewidth]{figures/confusion_matrix.pdf}
+\caption{Confusion matrix of the final model on the test set (threshold 0.5).}
+\label{fig:confusion}
+\end{minipage}
+\end{figure}
+
+The final model reaches a PR-AUC of 0.822 on the test set (Table~\ref{tab:test}), against
+0.832 in cross-validation. This small drop of one point is expected: the
+cross-validated score was slightly optimistic, because it was the best of 30 trials
+(Section~\ref{sec:tuning}). The test confirms the results of the calibration step:
+Platt scaling reduces the ECE from 0.026 to 0.006 and brings the mean predicted
+probability (0.242) close to the observed share (0.239), without changing the PR-AUC.
+Figure~\ref{fig:confusion} shows the decisions of the final model. Of the 2,336 high
+earners in the test set, it detects 1,493 (recall of 0.639) and misses 843. Among the
+7,422 other people, it wrongly predicts \high{} for 444. Missed high earners are
+therefore its main type of error, almost twice as frequent as false alarms. When the
+model predicts \high{}, it is right in 77.1\% of cases (1,493 out of 1,937).
+
+%=====================================================================
+\section{Fairness Audit}
+\label{sec:fairness}
+%=====================================================================
+
+\subsection{Setting}
+We audit the final model by sex (\texttt{src/fairness.py}). Sex is a protected
+attribute, the share of high earners differs strongly between men and women
+(Section~1), and the model uses it directly (Section~\ref{sec:shap}). The audit uses the
+final calibrated model and the test set, which contains 3,232 women (10.4\% of high
+earners) and 6,526 men (30.6\%). The test set is only used to measure; no choice is made
+from it. Metrics by group are computed with Fairlearn's \texttt{MetricFrame}.
+
+The task does not specify how the model would be used. For the purpose of this
+exercise, we assume that it identifies people eligible for an offer reserved for incomes
+above \$50K. The most harmful error is then to miss a person who really earns
+\high{}, since this person is wrongly denied the offer. We therefore choose 
+\emph{equal opportunity}: the true positive rate (TPR) should be the same for men and women.
+
+\subsection{Results}
+
+\begin{table}[htbp]
+\centering
+\begin{minipage}[c]{0.5\linewidth}
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llcccc}
+\toprule
+ & Group & Selection & TPR & FPR & Precision \\
+\midrule
+Before & Women & 0.075 & 0.551 & 0.020 & 0.764 \\
+       & Men   & 0.260 & 0.654 & 0.086 & 0.772 \\
+       & Gap   & 0.185 & \textbf{0.103} & 0.066 & 0.007 \\
+\addlinespace
+After  & Women & 0.097 & 0.631 & 0.035 & 0.679 \\
+       & Men   & 0.278 & 0.680 & 0.100 & 0.750 \\
+       & Gap   & 0.181 & \textbf{0.049} & 0.066 & 0.071 \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.32\linewidth}
+\centering
+\includegraphics[width=0.6\linewidth]{figures/fairness_tpr.pdf}
+\end{minipage}
+\caption{Fairness audit by sex on the test set, before mitigation (threshold 0.5) and
+after mitigation (one threshold per group). Selection is the share of people predicted
+\high{}. The figure shows the TPR of each group.}
+\label{tab:fairness}
+\end{table}
+
+\paragraph{Before mitigation.}
+With the single threshold of 0.5, the model detects 55.1\% of the women who earn
+\high{}, against 65.4\% of the men: a gap of 10.3 points in TPR
+(Table~\ref{tab:fairness}). Equal opportunity is therefore not satisfied. In contrast,
+precision is almost the same for both groups (0.764 and 0.772): when the model predicts
+\high{}, it is equally reliable for women and men.
+
+\paragraph{Mitigation.}
+We use Fairlearn's \texttt{ThresholdOptimizer}.
+It keeps the model unchanged and chooses one decision threshold per group, under the
+constraint of equal TPR. The thresholds are learned on the training set. Among all the
+pairs of thresholds that satisfy the constraint, it keeps the one with the best
+accuracy. Accuracy is not used here to evaluate the model, but only to choose between
+these pairs. With calibrated probabilities, maximising accuracy corresponds to our
+reference threshold of 0.5, so the only change comes from the fairness constraint.
+Indeed, the threshold for men stays close to 0.5 (0.47 to 0.48), while the threshold for
+women falls to 0.37--0.41.
+
+\paragraph{After mitigation.}
+The TPR gap is halved, from 0.103 to 0.049: the model now detects 63.1\% of the female
+high earners. The gap is not fully closed on the test set, for two reasons: the
+thresholds were learned on training predictions, which the model saw during training,
+and the test set contains only about 340 women who earn \high{}, so their TPR is
+estimated with some uncertainty. The cost for the whole test set is small: precision
+falls from 0.771 to 0.740, recall rises from 0.639 to 0.673, and F1 slightly rises from
+0.699 to 0.705. PR-AUC does not change, since the probabilities are the same.
+
+\paragraph{Limits.}
+The mitigation creates another gap: precision becomes lower for women than for men
+(0.679 against 0.750). When the base rates of two groups
+differ, a known result states that equal TPR and equal precision cannot both be reached
+(except by a perfect model). Choosing equal opportunity means accepting this
+difference in precision. Using a different threshold for each sex is also a policy
+decision, with legal and ethical implications, which would need to be validated before
+any real use. The same audit could be carried out for other attributes, such as race.
 
 %=====================================================================
 \begin{thebibliography}{9}
@@ -645,6 +863,10 @@ which the next steps use to rebuild the final model.
 \section{Additional Figures}
 \label{app:figures}
 
+Figures~\ref{fig:models_bars} to~\ref{fig:fairness_bars} show the results of
+Sections~\ref{sec:models}, \ref{sec:tuning}, \ref{sec:calibration} and~\ref{sec:fairness}
+as bar charts, one panel per metric.
+
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.9\linewidth]{figures/capital_net_transform.pdf}
@@ -652,6 +874,55 @@ which the next steps use to rebuild the final model.
 before and after the signed log transform. The transform compresses the long right tail;
 the two groups after the transform correspond to losses (negative values) and gains.}
 \label{fig:capital}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/model_comparison_bars.pdf}
+\caption{Model comparison with default hyperparameters (Section~\ref{sec:models}),
+5-fold cross-validation. The framed bar is the best model for each metric.}
+\label{fig:models_bars}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\linewidth]{figures/default_vs_tuned.pdf}
+\caption{Default (light) and tuned (full colour) models (Section~\ref{sec:tuning}), 5-fold
+cross-validation on the training set, threshold 0.5. The framed bar is the best tuned
+model for each metric.}
+\label{fig:tuned}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.87\linewidth]{figures/optuna_history.pdf}
+\caption{Cross-validated PR-AUC of each Optuna trial (Section~\ref{sec:tuning}). The black
+line is the best value found so far.}
+\label{fig:optuna}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\linewidth]{figures/calibration_bars.pdf}
+\caption{Calibration of the final model (Section~\ref{sec:calibration}), 5-fold
+cross-validation. For the Brier score and the ECE, lower is better.}
+\label{fig:calibration_bars}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/test_bars.pdf}
+\caption{Final evaluation on the test set (Section~\ref{sec:calibration}), without and
+with Platt scaling.}
+\label{fig:test_bars}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\linewidth]{figures/fairness_bars.pdf}
+\caption{Fairness metrics by sex on the test set, before (light) and after (full colour)
+mitigation (Section~\ref{sec:fairness}).}
+\label{fig:fairness_bars}
 \end{figure}
 
 \end{document}

@@ -1,7 +1,5 @@
 __pycache__/
 .venv/
-mlflow.db
-mlruns/
 report/*.aux
 report/*.log
 report/*.out

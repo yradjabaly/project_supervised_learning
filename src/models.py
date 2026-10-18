@@ -14,9 +14,10 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import PrecisionRecallDisplay
 from sklearn.model_selection import cross_val_predict, cross_validate
 
-from src.config import FIG_DIR, RANDOM_STATE, RESULTS_DIR
+from src.config import FIG_DIR, MODEL_COLORS, RANDOM_STATE, RESULTS_DIR
 from src.data import prepare_data
 from src.pipeline import CV, build_pipeline
+from src.plots import plot_metric_bars
 
 SCORING = ["precision", "recall", "f1", "roc_auc", "average_precision"]
 
@@ -60,7 +61,8 @@ def plot_pr_curves(models, X_train, y_train):
     for name, model in models.items():
         pipe = build_pipeline(model)
         proba = cross_val_predict(pipe, X_train, y_train, cv=CV, method="predict_proba")[:, 1]
-        PrecisionRecallDisplay.from_predictions(y_train, proba, name=name, ax=ax)
+        PrecisionRecallDisplay.from_predictions(y_train, proba, name=name, ax=ax,
+                                                color=MODEL_COLORS[name])
     ax.axhline(y_train.mean(), color="black", linestyle="--",
                label=f"Random model (prevalence = {y_train.mean():.3f})")
     ax.set_title("Precision-recall curves (5-fold cross-validation)")
@@ -85,6 +87,13 @@ def main():
     results = pd.DataFrame(results).T.round(3)
     print("\nModel comparison\n", results.to_string())
     results.to_csv(f"{RESULTS_DIR}/model_comparison.csv")
+
+    metrics = {"precision": "Precision", "recall": "Recall", "f1": "F1",
+               "roc_auc": "ROC-AUC", "average_precision": "PR-AUC",
+               "train_average_precision": "Train PR-AUC"}
+    best = {m: "max" for m in ["precision", "recall", "f1", "roc_auc", "average_precision"]}
+    plot_metric_bars({"Default": results}, metrics, MODEL_COLORS,
+                     "model_comparison_bars.pdf", best=best, ylim=(0, 1.1))
 
     plot_pr_curves(get_models(), X_train, y_train)
 

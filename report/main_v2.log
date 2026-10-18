@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.10.11)  17 OCT 2026 21:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.10.11)  18 OCT 2026 16:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -9,8 +9,8 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (/usr/local/texlive/2026/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
-(/usr/local/texlive/2026/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count275
 \c@section=\count276
@@ -281,30 +281,37 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
 )
 \Hy@SectionHShift=\skip56
+) (/usr/local/texlive/2026/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen195
+\WF@size=\dimen196
+\c@WF@wrappedlines=\count319
+\WF@box=\box59
+\WF@everypar=\toks27
+Package: wrapfig 2003/01/31  v 3.6
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count319
+\l__color_backend_stack_int=\count320
 ) (./main_v2.aux)
 \openout1 = `main_v2.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -314,23 +321,23 @@ LaTeX Font Info:    ... okay on input line 30.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(71.13188pt, 455.24411pt, 71.13188pt)
-* v-part:(T,H,B)=(71.13188pt, 702.78308pt, 71.13188pt)
+* h-part:(L,W,R)=(56.9055pt, 483.69687pt, 56.9055pt)
+* v-part:(T,H,B)=(56.9055pt, 731.23584pt, 56.9055pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=455.24411pt
-* \textheight=702.78308pt
-* \oddsidemargin=-1.1381pt
-* \evensidemargin=-1.1381pt
-* \topmargin=-38.1381pt
+* \textwidth=483.69687pt
+* \textheight=731.23584pt
+* \oddsidemargin=-15.36449pt
+* \evensidemargin=-15.36449pt
+* \topmargin=-52.36449pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=11.0pt
+* \topskip=10.0pt
 * \footskip=30.0pt
-* \marginparwidth=50.0pt
-* \marginparsep=10.0pt
+* \marginparwidth=57.0pt
+* \marginparsep=11.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -342,17 +349,17 @@ LaTeX Font Info:    ... okay on input line 30.
 
 (/usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count320
-\scratchdimen=\dimen195
-\scratchbox=\box59
-\nofMPsegments=\count321
-\nofMParguments=\count322
-\everyMPshowfont=\toks27
-\MPscratchCnt=\count323
-\MPscratchDim=\dimen196
-\MPnumerator=\count324
-\makeMPintoPDFobject=\count325
-\everyMPtoPDFconversion=\toks28
+\scratchcounter=\count321
+\scratchdimen=\dimen197
+\scratchbox=\box60
+\nofMPsegments=\count322
+\nofMParguments=\count323
+\everyMPshowfont=\toks28
+\MPscratchCnt=\count324
+\MPscratchDim=\dimen198
+\MPnumerator=\count325
+\makeMPintoPDFobject=\count326
+\everyMPtoPDFconversion=\toks29
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -361,8 +368,9 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
+Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 30.
+Package hyperref Info: Link coloring OFF on input line 29.
  (./main_v2.out) (./main_v2.out)
 \@outlinefile=\write3
 \openout3 = `main_v2.out'.
@@ -370,70 +378,117 @@ Package hyperref Info: Link coloring OFF on input line 30.
  [1
 
 {/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-<figures/rate_workclass.pdf, id=120, 433.62pt x 302.8113pt>
+<figures/rate_workclass.pdf, id=155, 433.62pt x 302.8113pt>
 File: figures/rate_workclass.pdf Graphic file (type pdf)
 <use figures/rate_workclass.pdf>
 Package pdftex.def Info: figures/rate_workclass.pdf  used on input line 137.
-(pdftex.def)             Requested size: 223.07211pt x 155.7809pt.
-<figures/hist_hours_per_week.pdf, id=121, 433.62pt x 289.08pt>
+(pdftex.def)             Requested size: 201.46344pt x 140.69028pt.
+<figures/hist_hours_per_week.pdf, id=156, 433.62pt x 289.08pt>
 File: figures/hist_hours_per_week.pdf Graphic file (type pdf)
 <use figures/hist_hours_per_week.pdf>
-Package pdftex.def Info: figures/hist_hours_per_week.pdf  used on input line 142.
-(pdftex.def)             Requested size: 223.07211pt x 148.71686pt.
-<figures/hist_age.pdf, id=122, 433.62pt x 289.08pt>
+Package pdftex.def Info: figures/hist_hours_per_week.pdf  used on input line 143.
+(pdftex.def)             Requested size: 201.46344pt x 134.31053pt.
+<figures/hist_age.pdf, id=157, 433.62pt x 289.08pt>
 File: figures/hist_age.pdf Graphic file (type pdf)
 <use figures/hist_age.pdf>
-Package pdftex.def Info: figures/hist_age.pdf  used on input line 148.
-(pdftex.def)             Requested size: 223.07211pt x 148.71686pt.
-<figures/rate_marital_status.pdf, id=123, 433.62pt x 289.08pt>
+Package pdftex.def Info: figures/hist_age.pdf  used on input line 150.
+(pdftex.def)             Requested size: 201.46344pt x 134.31053pt.
+<figures/rate_marital_status.pdf, id=158, 433.62pt x 289.08pt>
 File: figures/rate_marital_status.pdf Graphic file (type pdf)
 <use figures/rate_marital_status.pdf>
-Package pdftex.def Info: figures/rate_marital_status.pdf  used on input line 153.
-(pdftex.def)             Requested size: 223.07211pt x 148.71686pt.
- [2] [3 <./figures/rate_workclass.pdf> <./figures/hist_hours_per_week.pdf> <./figures/hist_age.pdf> <./figures/rate_marital_status.pdf>] [4] [5]
-<figures/pr_curves.pdf, id=358, 433.62pt x 325.215pt>
+Package pdftex.def Info: figures/rate_marital_status.pdf  used on input line 156.
+(pdftex.def)             Requested size: 201.46344pt x 134.31053pt.
+ [2 <./figures/rate_workclass.pdf> <./figures/hist_hours_per_week.pdf> <./figures/hist_age.pdf> <./figures/rate_marital_status.pdf>] [3] [4]
+<figures/pr_curves.pdf, id=391, 433.62pt x 325.215pt>
 File: figures/pr_curves.pdf Graphic file (type pdf)
 <use figures/pr_curves.pdf>
-Package pdftex.def Info: figures/pr_curves.pdf  used on input line 377.
-(pdftex.def)             Requested size: 273.14923pt x 204.87164pt.
- [6 <./figures/pr_curves.pdf>] [7] [8]
-<figures/default_vs_tuned.pdf, id=451, 722.7pt x 310.761pt>
-File: figures/default_vs_tuned.pdf Graphic file (type pdf)
-<use figures/default_vs_tuned.pdf>
-Package pdftex.def Info: figures/default_vs_tuned.pdf  used on input line 551.
-(pdftex.def)             Requested size: 409.71692pt x 176.17775pt.
-<figures/optuna_history.pdf, id=452, 867.24pt x 252.945pt>
-File: figures/optuna_history.pdf Graphic file (type pdf)
-<use figures/optuna_history.pdf>
-Package pdftex.def Info: figures/optuna_history.pdf  used on input line 560.
-(pdftex.def)             Requested size: 455.24411pt x 132.77881pt.
- [9 <./figures/default_vs_tuned.pdf> <./figures/optuna_history.pdf>] [10]
-<figures/capital_net_transform.pdf, id=585, 722.7pt x 252.945pt>
+Package pdftex.def Info: figures/pr_curves.pdf  used on input line 382.
+(pdftex.def)             Requested size: 201.46344pt x 151.09935pt.
+ [5 <./figures/pr_curves.pdf>] [6] [7]
+<figures/shap_beeswarm.pdf, id=502, 483.42871pt x 275.58803pt>
+File: figures/shap_beeswarm.pdf Graphic file (type pdf)
+<use figures/shap_beeswarm.pdf>
+Package pdftex.def Info: figures/shap_beeswarm.pdf  used on input line 609.
+(pdftex.def)             Requested size: 237.01411pt x 135.11499pt.
+<figures/shap_waterfall.pdf, id=503, 518.6421pt x 289.31587pt>
+File: figures/shap_waterfall.pdf Graphic file (type pdf)
+<use figures/shap_waterfall.pdf>
+Package pdftex.def Info: figures/shap_waterfall.pdf  used on input line 614.
+(pdftex.def)             Requested size: 237.01411pt x 132.21281pt.
+<figures/reliability_cv.pdf, id=506, 433.62pt x 433.62pt>
+File: figures/reliability_cv.pdf Graphic file (type pdf)
+<use figures/reliability_cv.pdf>
+Package pdftex.def Info: figures/reliability_cv.pdf  used on input line 692.
+(pdftex.def)             Requested size: 203.1518pt x 203.15302pt.
+ [8 <./figures/shap_beeswarm.pdf> <./figures/shap_waterfall.pdf>]
+<figures/confusion_matrix.pdf, id=627, 260.17201pt x 231.26399pt>
+File: figures/confusion_matrix.pdf Graphic file (type pdf)
+<use figures/confusion_matrix.pdf>
+Package pdftex.def Info: figures/confusion_matrix.pdf  used on input line 749.
+(pdftex.def)             Requested size: 148.97879pt x 132.43231pt.
+ [9 <./figures/reliability_cv.pdf> <./figures/confusion_matrix.pdf>]
+<figures/fairness_tpr.pdf, id=724, 165.4983pt x 216.81pt>
+File: figures/fairness_tpr.pdf Graphic file (type pdf)
+<use figures/fairness_tpr.pdf>
+Package pdftex.def Info: figures/fairness_tpr.pdf  used on input line 811.
+(pdftex.def)             Requested size: 92.87285pt x 121.6708pt.
+ [10 <./figures/fairness_tpr.pdf>]
+<figures/capital_net_transform.pdf, id=775, 722.7pt x 252.945pt>
 File: figures/capital_net_transform.pdf Graphic file (type pdf)
 <use figures/capital_net_transform.pdf>
-Package pdftex.def Info: figures/capital_net_transform.pdf  used on input line 650.
-(pdftex.def)             Requested size: 409.71692pt x 143.4005pt.
- [11 <./figures/capital_net_transform.pdf>] (./main_v2.aux)
+Package pdftex.def Info: figures/capital_net_transform.pdf  used on input line 872.
+(pdftex.def)             Requested size: 435.32422pt x 152.36255pt.
+<figures/model_comparison_bars.pdf, id=776, 997.32597pt x 216.81pt>
+File: figures/model_comparison_bars.pdf Graphic file (type pdf)
+<use figures/model_comparison_bars.pdf>
+Package pdftex.def Info: figures/model_comparison_bars.pdf  used on input line 881.
+(pdftex.def)             Requested size: 483.69687pt x 105.1494pt.
+<figures/default_vs_tuned.pdf, id=779, 831.105pt x 216.81pt>
+File: figures/default_vs_tuned.pdf Graphic file (type pdf)
+<use figures/default_vs_tuned.pdf>
+Package pdftex.def Info: figures/default_vs_tuned.pdf  used on input line 889.
+(pdftex.def)             Requested size: 435.32422pt x 113.56229pt.
+<figures/optuna_history.pdf, id=782, 867.24pt x 252.945pt>
+File: figures/optuna_history.pdf Graphic file (type pdf)
+<use figures/optuna_history.pdf>
+Package pdftex.def Info: figures/optuna_history.pdf  used on input line 898.
+(pdftex.def)             Requested size: 420.8139pt x 122.73993pt.
+<figures/calibration_bars.pdf, id=785, 831.105pt x 216.81pt>
+File: figures/calibration_bars.pdf Graphic file (type pdf)
+<use figures/calibration_bars.pdf>
+Package pdftex.def Info: figures/calibration_bars.pdf  used on input line 906.
+(pdftex.def)             Requested size: 435.32422pt x 113.56229pt.
+<figures/test_bars.pdf, id=788, 997.32597pt x 216.81pt>
+File: figures/test_bars.pdf Graphic file (type pdf)
+<use figures/test_bars.pdf>
+Package pdftex.def Info: figures/test_bars.pdf  used on input line 914.
+(pdftex.def)             Requested size: 483.69687pt x 105.1494pt.
+<figures/fairness_bars.pdf, id=791, 664.16129pt x 216.81pt>
+File: figures/fairness_bars.pdf Graphic file (type pdf)
+<use figures/fairness_bars.pdf>
+Package pdftex.def Info: figures/fairness_bars.pdf  used on input line 922.
+(pdftex.def)             Requested size: 386.95897pt x 126.3189pt.
+ [11 <./figures/capital_net_transform.pdf> <./figures/model_comparison_bars.pdf> <./figures/default_vs_tuned.pdf>] [12 <./figures/optuna_history.pdf> <./figures/calibration_bars.pdf> <./figures/test_bars.pdf> <./figures/fairness_bars.pdf>] (./main_v2.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main_v2.out' has not changed.
-(rerunfilecheck)             Checksum: 0FD58325A343C5484DF02B5DA262E7E5;3392.
+(rerunfilecheck)             Checksum: F622E052E1393ACF2AD2303E96A80271;4497.
  ) 
 Here is how much of TeX's memory you used:
- 11399 strings out of 467525
- 181328 string characters out of 5418981
- 611072 words of memory out of 5000000
- 40129 multiletter control sequences out of 15000+600000
- 635575 words of font info for 68 fonts, out of 8000000 for 9000
+ 11586 strings out of 467525
+ 185509 string characters out of 5418981
+ 621923 words of memory out of 5000000
+ 40280 multiletter control sequences out of 15000+600000
+ 635565 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,603b,557s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on main_v2.pdf (11 pages, 360911 bytes).
+ 75i,12n,79p,603b,563s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on main_v2.pdf (12 pages, 566543 bytes).
 PDF statistics:
- 706 PDF objects out of 1000 (max. 8388607)
- 304 compressed objects within 4 object streams
- 70 named destinations out of 1000 (max. 500000)
- 225 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1250 PDF objects out of 1440 (max. 8388607)
+ 467 compressed objects within 5 object streams
+ 96 named destinations out of 1000 (max. 500000)
+ 334 words of extra memory for PDF output out of 10000 (max. 10000000)
 

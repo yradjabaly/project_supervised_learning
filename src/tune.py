@@ -17,10 +17,11 @@ from lightgbm import LGBMClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 
-from src.config import (FIG_DIR, MLFLOW_EXPERIMENT, MLFLOW_URI, N_TRIALS,
-                        RANDOM_STATE, RESULTS_DIR)
+from src.config import (FIG_DIR, MLFLOW_EXPERIMENT, MLFLOW_URI, MODEL_COLORS,
+                        N_TRIALS, RANDOM_STATE, RESULTS_DIR)
 from src.data import prepare_data
 from src.models import cross_validate_model
+from src.plots import plot_metric_bars
 
 MODEL_NAMES = ["Logistic regression", "Random forest", "LightGBM"]
 
@@ -74,7 +75,7 @@ def plot_histories(studies):
     fig, axes = plt.subplots(1, len(studies), figsize=(12, 3.5))
     for ax, (name, study) in zip(axes, studies.items()):
         values = pd.Series([trial.value for trial in study.trials])
-        ax.plot(values.index, values, "o", alpha=0.5, label="Trial")
+        ax.plot(values.index, values, "o", alpha=0.6, color=MODEL_COLORS[name], label="Trial")
         ax.plot(values.index, values.cummax(), color="black", label="Best so far")
         ax.set_title(name)
         ax.set_xlabel("Trial")
@@ -86,34 +87,13 @@ def plot_histories(studies):
 
 
 def plot_default_vs_tuned(tuned):
-    """Default (step 4) versus tuned scores, all from 5-fold cross-validation.
-    Left: cross-validated and training PR-AUC (the gap shows overfitting).
-    Right: precision and recall at the default threshold of 0.5."""
+    """Default (step 4) versus tuned scores, one panel per metric (5-fold CV)."""
     default = pd.read_csv(f"{RESULTS_DIR}/model_comparison.csv", index_col=0)
-    panels = [
-        ("PR-AUC\n(solid: cross-validation, dashed: training)",
-         "average_precision", "train_average_precision"),
-        ("Precision and recall at threshold 0.5\n(solid: precision, dashed: recall)",
-         "precision", "recall"),
-    ]
-    colors = ["tab:blue", "tab:orange", "tab:green"]
-
-    fig, axes = plt.subplots(1, 2, figsize=(10, 4.3))
-    for ax, (title, solid, dashed) in zip(axes, panels):
-        for name, color in zip(MODEL_NAMES, colors):
-            ax.plot([0, 1], [default.loc[name, solid], tuned.loc[name, solid]],
-                    "o-", color=color, label=name)
-            ax.plot([0, 1], [default.loc[name, dashed], tuned.loc[name, dashed]],
-                    "o--", color=color)
-        ax.set_xticks([0, 1], ["Default", "Tuned"])
-        ax.set_xlim(-0.3, 1.3)
-        ax.set_title(title)
-    # One legend for both panels, below the figure
-    handles, labels = axes[0].get_legend_handles_labels()
-    fig.legend(handles, labels, loc="lower center", ncol=3)
-    fig.tight_layout(rect=[0, 0.08, 1, 1])
-    fig.savefig(f"{FIG_DIR}/default_vs_tuned.pdf")
-    plt.close(fig)
+    metrics = {"precision": "Precision", "recall": "Recall", "f1": "F1",
+               "average_precision": "PR-AUC", "train_average_precision": "Train PR-AUC"}
+    best = {m: "max" for m in ["precision", "recall", "f1", "average_precision"]}
+    plot_metric_bars({"Default": default, "Tuned": tuned}, metrics, MODEL_COLORS,
+                     "default_vs_tuned.pdf", best=best, ylim=(0, 1.1))
 
 
 def main():

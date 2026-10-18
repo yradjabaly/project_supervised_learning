@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 from matplotlib.ticker import PercentFormatter
 
-from src.config import FIG_DIR
+from src.config import BLUE, FIG_DIR, GRAY
 from src.data import basic_summary, load_data, make_train_test_split
 
 plt.rcParams["font.size"] = 11
@@ -60,10 +60,11 @@ def country_table(df):
 def plot_histogram_by_class(df, feature, bins, bounds=None):
     """Each class is normalised separately: bars show the % of that class in each bin."""
     plt.figure(figsize=(6, 4))
-    for label, name in [(0, "<=50K"), (1, ">50K")]:
+    for label, name, color in [(0, "<=50K", GRAY), (1, ">50K", BLUE)]:
         values = df.loc[df["income"] == label, feature]
         weights = np.ones(len(values)) / len(values)
-        plt.hist(values, bins=bins, weights=weights, alpha=0.6, label=f"{name} (n={len(values)})")
+        plt.hist(values, bins=bins, weights=weights, alpha=0.6, color=color,
+                 label=f"{name} (n={len(values)})")
     if bounds is not None:
         for bound in bounds:
             plt.axvline(bound, color="black", linestyle="--")
@@ -76,16 +77,15 @@ def plot_histogram_by_class(df, feature, bins, bounds=None):
     plt.savefig(f"{FIG_DIR}/hist_{feature}.pdf")
     plt.close()
 
-
 def plot_capital_net(df):
     """Appendix: non-zero net capital income before and after the signed log transform."""
     net = df["capital_gain"] - df["capital_loss"]
     net = net[net != 0]
     fig, axes = plt.subplots(1, 2, figsize=(10, 3.5))
-    axes[0].hist(net, bins=50)
+    axes[0].hist(net, bins=50, color=BLUE)
     axes[0].set_xlabel("capital_gain - capital_loss")
     axes[0].set_title("Before transform")
-    axes[1].hist(np.sign(net) * np.log1p(np.abs(net)), bins=50)
+    axes[1].hist(np.sign(net) * np.log1p(np.abs(net)), bins=50, color=BLUE)
     axes[1].set_xlabel("sign(x) log(1 + |x|)")
     axes[1].set_title("After transform (capital_net)")
     axes[0].set_ylabel("Number of individuals")
@@ -99,7 +99,7 @@ def plot_rate_by_group(df, feature):
     overall = df["income"].mean()
 
     fig, ax = plt.subplots(figsize=(6, max(4, 0.3 * len(table) + 1.5)))
-    bars = ax.barh(table.index.astype(str), table["rate_above_50k"])
+    bars = ax.barh(table.index.astype(str), table["rate_above_50k"], color=BLUE)
     labels = [f"{rate:.0%} (n={n})" for rate, n in
               zip(table["rate_above_50k"], table["n_individuals"])]
     ax.bar_label(bars, labels=labels, padding=3, fontsize=9)
