@@ -1,4 +1,4 @@
-,brier,ece,average_precision,mean_predicted_proba,observed_rate,precision,recall
-Uncalibrated,0.0883,0.0229,0.8316,0.2623,0.2394,0.7502,0.702
-Platt (sigmoid),0.0873,0.0033,0.8316,0.2398,0.2394,0.7866,0.6521
-Isotonic,0.0874,0.0029,0.8295,0.2398,0.2394,0.7815,0.6595
+,brier,ece,average_precision,mean_predicted_proba,observed_rate,accuracy,precision,recall
+Uncalibrated,0.0883,0.0229,0.8316,0.2623,0.2394,0.8727,0.7502,0.702
+Platt (sigmoid),0.0873,0.0033,0.8316,0.2398,0.2394,0.8744,0.7866,0.6521
+Isotonic,0.0874,0.0029,0.8295,0.2398,0.2394,0.8743,0.7815,0.6595

@@ -1,0 +1,4 @@
+,accuracy,precision,recall,f1,roc_auc,average_precision,average_precision_std,train_average_precision
+Logistic regression,0.838,0.699,0.571,0.628,0.89,0.709,0.009,0.711
+Random forest,0.851,0.666,0.761,0.71,0.918,0.809,0.005,0.886
+LightGBM,0.873,0.75,0.702,0.725,0.929,0.832,0.003,0.861

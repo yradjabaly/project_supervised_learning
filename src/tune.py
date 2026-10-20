@@ -86,14 +86,16 @@ def plot_histories(studies):
     plt.close(fig)
 
 
-def plot_default_vs_tuned(tuned):
+def plot_default_vs_tuned(tuned, majority_accuracy):
     """Default (step 4) versus tuned scores, one panel per metric (5-fold CV)."""
     default = pd.read_csv(f"{RESULTS_DIR}/model_comparison.csv", index_col=0)
-    metrics = {"precision": "Precision", "recall": "Recall", "f1": "F1",
-               "average_precision": "PR-AUC", "train_average_precision": "Train PR-AUC"}
-    best = {m: "max" for m in ["precision", "recall", "f1", "average_precision"]}
+    metrics = {"accuracy": "Accuracy", "precision": "Precision", "recall": "Recall",
+               "f1": "F1", "average_precision": "PR-AUC",
+               "train_average_precision": "Train PR-AUC"}
+    best = {m: "max" for m in ["accuracy", "precision", "recall", "f1", "average_precision"]}
     plot_metric_bars({"Default": default, "Tuned": tuned}, metrics, MODEL_COLORS,
-                     "default_vs_tuned.pdf", best=best, ylim=(0, 1.1))
+                     "default_vs_tuned.pdf", best=best, ylim=(0, 1.1),
+                     reference={"accuracy": majority_accuracy})
 
 
 def main():
@@ -128,7 +130,7 @@ def main():
     with open(f"{RESULTS_DIR}/best_params.json", "w") as f:
         json.dump(best_params, f, indent=2)
     plot_histories(studies)
-    plot_default_vs_tuned(results)
+    plot_default_vs_tuned(results, 1 - y_train.mean())
 
     # Summary run: the comparison table and the tuning figures, as artifacts
     with mlflow.start_run(run_name="Tuning summary"):

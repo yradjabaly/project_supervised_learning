@@ -12,9 +12,8 @@ def lighter(color, amount=0.6):
     return tuple(c + (1 - c) * amount for c in to_rgb(color))
 
 
-def plot_metric_bars(tables, metrics, colors, filename, best=None, ylim=None):
+def plot_metric_bars(tables, metrics, colors, filename, best=None, ylim=None, reference=None):    
     """One panel per metric, one bar per group (model, calibration or sex).
-
     tables:  {version: DataFrame} with the groups as index and the metrics as columns.
              With two versions (e.g. default and tuned), the first one is drawn in a
              light shade and the second one in the full colour of the group.
@@ -22,8 +21,11 @@ def plot_metric_bars(tables, metrics, colors, filename, best=None, ylim=None):
     best:    {column: "max" or "min"}. The best group of the last version gets a dark
              edge and a bold label, to guide the eye.
     ylim:    common y-axis limits (e.g. (0, 1.1)); by default each panel has its own.
+    reference: {column: value} draws a dashed horizontal line (e.g. the accuracy of a
+             model that always predicts <=50K).
     """
     best = best or {}
+    reference = reference or {}
     versions = list(tables)
     last = tables[versions[-1]]
     groups = list(last.index)
@@ -57,6 +59,8 @@ def plot_metric_bars(tables, metrics, colors, filename, best=None, ylim=None):
         top = max(tables[v][metric].max() for v in versions)
         ax.set_ylim(ylim if ylim else (0, top * 1.25))
         ax.set_title(title, fontsize=10)
+        if metric in reference:
+            ax.axhline(reference[metric], color="black", linestyle="--", linewidth=1)
         ax.set_xticks(x, [g.replace(" ", "\n", 1) for g in groups], fontsize=8)
         ax.spines[["top", "right"]].set_visible(False)
 

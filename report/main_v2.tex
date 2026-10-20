@@ -286,8 +286,8 @@ the others.
 \subsection{Metrics}
 The positive class represents only 23.9\% of the data. With such an imbalance, accuracy
 is misleading: a model that always predicts \low{} reaches 76.1\% accuracy without finding
-a single high earner. We therefore do not use accuracy, and choose metrics that focus on
-the positive class.
+a single high earner. We still report accuracy as a standard reference, but we do not use it to compare
+models, and choose metrics that focus on the positive class.
 
 Our main metric is the area under the precision--recall curve (PR-AUC). It measures how
 well the model ranks high earners above the others, over all possible thresholds. It
@@ -302,7 +302,8 @@ visible: in Section~\ref{sec:models}, ROC-AUC is always much higher than PR-AUC.
 Ranking metrics do not show the decisions the model actually makes. We therefore also
 report three metrics at the default threshold of 0.5: recall, the share of high earners
 that the model finds; precision, the share of predicted high earners that are correct;
-and F1, which balances the two.
+and F1, which balances the two. Accuracy, the share of correct predictions, is given as a
+reference.
 
 \subsection{Chosen remedy}
 We handle the imbalance with class weighting. This method changes the training loss:
@@ -366,6 +367,7 @@ hyperparameters, threshold 0.5). Train PR-AUC is computed on the training folds.
 \toprule
  & Log.\ reg. & Rand.\ forest & LightGBM \\
 \midrule
+Accuracy     & 0.838 & 0.844 & \textbf{0.874} \\
 Precision    & 0.700 & 0.695 & \textbf{0.781} \\
 Recall       & 0.566 & 0.618 & \textbf{0.658} \\
 F1           & 0.626 & 0.654 & \textbf{0.714} \\
@@ -389,7 +391,8 @@ on the training set). AP is the PR-AUC; the dashed line is a random model.}
 \paragraph{Ranking of the models.}
 LightGBM is clearly the best model (Table~\ref{tab:models}). Its PR-AUC (0.830) is 12.1
 points higher than the baseline, and it also has the best ROC-AUC, precision, recall and
-F1. Figure~\ref{fig:pr} confirms this: its curve lies above the two others at almost every
+F1. Its accuracy (0.874) is also the highest, but only 11 points above the 0.761 of a model
+that always predicts \low{}. Figure~\ref{fig:pr} confirms the ranking: its curve lies above the two others at almost every
 level of recall. The random forest improves on the baseline only slightly (+2.2 points of
 PR-AUC), and the two models have the same ROC-AUC (0.889 and 0.890). Their curves are
 close, and they meet at high recall. All models are far above the random model (0.239),
@@ -514,19 +517,19 @@ threshold 0.5). Default scores come from Table~\ref{tab:models}.}
 \label{tab:tuning}
 \small
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{llccccc>{\raggedright\arraybackslash}p{3.4cm}}
+\begin{tabular}{llcccccc>{\raggedright\arraybackslash}p{3.0cm}}
 \toprule
-Model & Version & Prec. & Recall & F1 & PR-AUC & Train PR-AUC & Best hyperparameters \\
+Model & Version & Acc. & Prec. & Recall & F1 & PR-AUC & Train PR-AUC & Best hyperparameters \\
 \midrule
-Log.\ regression & Default & 0.700 & 0.566 & 0.626 & 0.709 & 0.711 & \\
- & Tuned & 0.699 & 0.571 & 0.628 & 0.709 & 0.711 & $w = 1.02$, \texttt{C} $= 4.05$ \\
+Log.\ regression & Default & 0.838 & 0.700 & 0.566 & 0.626 & 0.709 & 0.711 & \\
+ & Tuned & 0.838 & 0.699 & 0.571 & 0.628 & 0.709 & 0.711 & $w = 1.02$, \texttt{C} $= 4.05$ \\
 \addlinespace
-Random forest & Default & 0.695 & 0.618 & 0.654 & 0.731 & 0.991 & \\
- & Tuned & 0.666 & 0.761 & 0.710 & 0.809 & 0.886 & $w = 2.05$, 400 trees, depth 18,
+Random forest & Default & 0.844 & 0.695 & 0.618 & 0.654 & 0.731 & 0.991 & \\
+ & Tuned & 0.851 & 0.666 & 0.761 & 0.710 & 0.809 & 0.886 & $w = 2.05$, 400 trees, depth 18,
  3 per leaf, 25 features \\
 \addlinespace
-LightGBM & Default & 0.781 & 0.658 & 0.714 & 0.830 & 0.860 & \\
- & Tuned & 0.750 & 0.702 & \textbf{0.725} & \textbf{0.832} & 0.861 & $w = 1.31$, 550
+LightGBM & Default & 0.874 & 0.781 & 0.658 & 0.714 & 0.830 & 0.860 & \\
+ & Tuned & 0.873 & 0.750 & 0.702 & \textbf{0.725} & \textbf{0.832} & 0.861 & $w = 1.31$, 550
  trees, 9 leaves, rate 0.083 \\
 \bottomrule
 \end{tabular}
@@ -585,7 +588,7 @@ cross-validated metrics of the best trial, and the file \texttt{best\_params.jso
 artifact.
 \item \textbf{One run per trial} (90 runs), nested in the run of its model. Each one
 stores the hyperparameters of the trial, including $w$, and all the metrics of
-Section~3.1: precision, recall, F1, ROC-AUC and PR-AUC in cross-validation, the standard
+Section~3.1: accuracy, precision, recall, F1, ROC-AUC and PR-AUC in cross-validation, the standard
 deviation of PR-AUC across folds, and the training PR-AUC.
 \item \textbf{One summary run}. It stores, as artifacts, the comparison table
 (\texttt{tuning\_results.csv}), the best hyperparameters of the three models, and
@@ -675,13 +678,14 @@ before, on the training set only.
 The observed share of \high{} is 0.239.}
 \label{tab:calibration}
 \small
-\begin{tabular}{lcccccc}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccccc}
 \toprule
-Version & Brier & ECE & Mean predicted prob. & PR-AUC & Precision & Recall \\
+Version & Brier & ECE & Mean predicted prob. & PR-AUC & Acc. & Precision & Recall \\
 \midrule
-Uncalibrated    & 0.0883 & 0.0229 & 0.262 & 0.832 & 0.750 & 0.702 \\
-Platt (sigmoid) & \textbf{0.0873} & 0.0033 & 0.240 & 0.832 & 0.787 & 0.652 \\
-Isotonic        & 0.0874 & \textbf{0.0029} & 0.240 & 0.830 & 0.782 & 0.660 \\
+Uncalibrated    & 0.0883 & 0.0229 & 0.262 & 0.832 & 0.873 & 0.750 & 0.702 \\
+Platt (sigmoid) & \textbf{0.0873} & 0.0033 & 0.240 & 0.832 & 0.874 & 0.787 & 0.652 \\
+Isotonic        & 0.0874 & \textbf{0.0029} & 0.240 & 0.830 & 0.874 & 0.782 & 0.660 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -734,6 +738,7 @@ is changed after this step.
 \midrule
 PR-AUC               & 0.822  & 0.822  \\
 ROC-AUC              & 0.926  & 0.926  \\
+Accuracy             & 0.865  & 0.868  \\
 Precision            & 0.730  & 0.771  \\
 Recall               & 0.691  & 0.639  \\
 F1                   & 0.710  & 0.699  \\
@@ -791,17 +796,17 @@ above \$50K. The most harmful error is then to miss a person who really earns
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{llcccc}
+\begin{tabular}{llccccc}
 \toprule
- & Group & Selection & TPR & FPR & Precision \\
+ & Group & Selection & TPR & FPR & Precision & Acc. \\
 \midrule
-Before & Women & 0.075 & 0.551 & 0.020 & 0.764 \\
-       & Men   & 0.260 & 0.654 & 0.086 & 0.772 \\
-       & Gap   & 0.185 & \textbf{0.103} & 0.066 & 0.007 \\
+Before & Women & 0.075 & 0.551 & 0.020 & 0.764 & 0.936 \\
+       & Men   & 0.260 & 0.654 & 0.086 & 0.772 & 0.835 \\
+       & Gap   & 0.185 & \textbf{0.103} & 0.066 & 0.007 & 0.101 \\
 \addlinespace
-After  & Women & 0.097 & 0.631 & 0.035 & 0.679 \\
-       & Men   & 0.278 & 0.680 & 0.100 & 0.750 \\
-       & Gap   & 0.181 & \textbf{0.049} & 0.066 & 0.071 \\
+After  & Women & 0.097 & 0.631 & 0.035 & 0.679 & 0.931 \\
+       & Men   & 0.278 & 0.680 & 0.100 & 0.750 & 0.833 \\
+       & Gap   & 0.181 & \textbf{0.049} & 0.066 & 0.071 & 0.098 \\
 \bottomrule
 \end{tabular}
 \end{minipage}
@@ -821,7 +826,9 @@ With the single threshold of 0.5, the model detects 55.1\% of the women who earn
 \high{}, against 65.4\% of the men: a gap of 10.3 points in TPR
 (Table~\ref{tab:fairness}). Equal opportunity is therefore not satisfied. In contrast,
 precision is almost the same for both groups (0.764 and 0.772): when the model predicts
-\high{}, it is equally reliable for women and men.
+\high{}, it is equally reliable for women and men. Accuracy would hide the TPR gap: it is
+higher for women (0.936) than for men (0.835), only because few women earn \high{}, so
+predicting \low{} is almost always right for them.
 
 \paragraph{Mitigation.}
 We use Fairlearn's \texttt{ThresholdOptimizer}.
@@ -839,7 +846,7 @@ The TPR gap is halved, from 0.103 to 0.049: the model now detects 63.1\% of the 
 high earners. The gap is not fully closed on the test set, for two reasons: the
 thresholds were learned on training predictions, which the model saw during training,
 and the test set contains only about 340 women who earn \high{}, so their TPR is
-estimated with some uncertainty. The cost for the whole test set is small: precision
+estimated with some uncertainty. The cost for the whole test set is small: accuracy falls from 0.868 to 0.865, precision
 falls from 0.771 to 0.740, recall rises from 0.639 to 0.673, and F1 slightly rises from
 0.699 to 0.705. PR-AUC does not change, since the probabilities are the same.
 
@@ -880,7 +887,7 @@ the two groups after the transform correspond to losses (negative values) and ga
 \centering
 \includegraphics[width=\linewidth]{figures/model_comparison_bars.pdf}
 \caption{Model comparison with default hyperparameters (Section~\ref{sec:models}),
-5-fold cross-validation. The framed bar is the best model for each metric.}
+5-fold cross-validation. The framed bar is the best model for each metric. Dashed line: accuracy of a model that always predicts \low{} (0.761).}
 \label{fig:models_bars}
 \end{figure}
 
@@ -889,7 +896,7 @@ the two groups after the transform correspond to losses (negative values) and ga
 \includegraphics[width=0.9\linewidth]{figures/default_vs_tuned.pdf}
 \caption{Default (light) and tuned (full colour) models (Section~\ref{sec:tuning}), 5-fold
 cross-validation on the training set, threshold 0.5. The framed bar is the best tuned
-model for each metric.}
+model for each metric. Dashed line: accuracy of a model that always predicts \low{} (0.761).}
 \label{fig:tuned}
 \end{figure}
 
@@ -905,7 +912,7 @@ line is the best value found so far.}
 \centering
 \includegraphics[width=0.9\linewidth]{figures/calibration_bars.pdf}
 \caption{Calibration of the final model (Section~\ref{sec:calibration}), 5-fold
-cross-validation. For the Brier score and the ECE, lower is better.}
+cross-validation. For the Brier score and the ECE, lower is better. Dashed line: accuracy of a model that always predicts \low{} (0.761).}
 \label{fig:calibration_bars}
 \end{figure}
 
@@ -913,7 +920,7 @@ cross-validation. For the Brier score and the ECE, lower is better.}
 \centering
 \includegraphics[width=\linewidth]{figures/test_bars.pdf}
 \caption{Final evaluation on the test set (Section~\ref{sec:calibration}), without and
-with Platt scaling.}
+with Platt scaling. Dashed line: accuracy of a model that always predicts \low{} (0.761).}
 \label{fig:test_bars}
 \end{figure}
 

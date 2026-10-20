@@ -51,11 +51,12 @@ def main():
     plt.close(fig)
 
     # Appendix: one panel per metric
-    metrics = {"average_precision": "PR-AUC", "precision": "Precision", "recall": "Recall",
-               "f1": "F1", "brier": "Brier score", "ece": "ECE"}
-    best = {"average_precision": "max", "precision": "max", "recall": "max", "f1": "max",
-            "brier": "min", "ece": "min"}
-    plot_metric_bars({"Test": results}, metrics, METHOD_COLORS, "test_bars.pdf", best=best)    
+    metrics = {"average_precision": "PR-AUC", "accuracy": "Accuracy", "precision": "Precision",
+               "recall": "Recall", "f1": "F1", "brier": "Brier score", "ece": "ECE"}
+    best = {"average_precision": "max", "accuracy": "max", "precision": "max", "recall": "max",
+            "f1": "max", "brier": "min", "ece": "min"}
+    plot_metric_bars({"Test": results}, metrics, METHOD_COLORS, "test_bars.pdf", best=best,
+                     reference={"accuracy": 1 - y_test.mean()})
 
 
 if __name__ == "__main__":

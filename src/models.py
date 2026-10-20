@@ -19,8 +19,7 @@ from src.data import prepare_data
 from src.pipeline import CV, build_pipeline
 from src.plots import plot_metric_bars
 
-SCORING = ["precision", "recall", "f1", "roc_auc", "average_precision"]
-
+SCORING = ["accuracy", "precision", "recall", "f1", "roc_auc", "average_precision"]
 
 def get_models():
     """Default hyperparameters, without class weighting.
@@ -88,12 +87,15 @@ def main():
     print("\nModel comparison\n", results.to_string())
     results.to_csv(f"{RESULTS_DIR}/model_comparison.csv")
 
-    metrics = {"precision": "Precision", "recall": "Recall", "f1": "F1",
-               "roc_auc": "ROC-AUC", "average_precision": "PR-AUC",
+    metrics = {"accuracy": "Accuracy", "precision": "Precision", "recall": "Recall",
+               "f1": "F1", "roc_auc": "ROC-AUC", "average_precision": "PR-AUC",
                "train_average_precision": "Train PR-AUC"}
-    best = {m: "max" for m in ["precision", "recall", "f1", "roc_auc", "average_precision"]}
+    best = {m: "max" for m in ["accuracy", "precision", "recall", "f1", "roc_auc",
+                               "average_precision"]}
+    # Dashed line: accuracy of a model that always predicts <=50K
     plot_metric_bars({"Default": results}, metrics, MODEL_COLORS,
-                     "model_comparison_bars.pdf", best=best, ylim=(0, 1.1))
+                     "model_comparison_bars.pdf", best=best, ylim=(0, 1.1),
+                     reference={"accuracy": 1 - y_train.mean()})
 
     plot_pr_curves(get_models(), X_train, y_train)
 

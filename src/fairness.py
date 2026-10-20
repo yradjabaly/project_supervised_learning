@@ -12,7 +12,7 @@ import pandas as pd
 from fairlearn.metrics import (MetricFrame, false_positive_rate, selection_rate,
                                true_positive_rate)
 from fairlearn.postprocessing import ThresholdOptimizer
-from sklearn.metrics import f1_score, precision_score, recall_score
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 
 from src.calibration import build_calibrated_model
 from src.config import BLUE, ORANGE, RANDOM_STATE, RESULTS_DIR
@@ -26,6 +26,7 @@ METRICS = {
     "tpr": true_positive_rate,            # share of real high earners who are detected
     "fpr": false_positive_rate,           # share of the others wrongly predicted >50K
     "precision": precision_score,         # share of correct >50K predictions
+    "accuracy": accuracy_score,           # share of correct predictions (both classes)
 }
 
 
@@ -74,7 +75,8 @@ def main():
         tables[version] = by_group
         print(f"\n{version}\n", by_group.round(3).to_string())
         print(" Gap between groups:", gap.round(3).to_dict())
-        print(f" Overall: precision = {precision_score(y_test, y_pred):.3f}, "
+        print(f" Overall: accuracy = {accuracy_score(y_test, y_pred):.3f}, "
+              f"precision = {precision_score(y_test, y_pred):.3f}, "
               f"recall = {recall_score(y_test, y_pred):.3f}, F1 = {f1_score(y_test, y_pred):.3f}")
         for group, values in by_group.iterrows():
             rows.append({"version": version, "sex": group, **values.to_dict()})
@@ -85,7 +87,7 @@ def main():
     plot_metric_bars(tables, {"tpr": "True positive rate"}, SEX_COLORS,
                      "fairness_tpr.pdf", ylim=(0, 1))
     plot_metric_bars(tables, {"selection_rate": "Selection rate", "tpr": "TPR",
-                              "fpr": "FPR", "precision": "Precision"},
+                              "fpr": "FPR", "precision": "Precision", "accuracy": "Accuracy"},
                      SEX_COLORS, "fairness_bars.pdf", ylim=(0, 1))
 
 

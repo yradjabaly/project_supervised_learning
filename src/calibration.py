@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.calibration import CalibratedClassifierCV, calibration_curve
-from sklearn.metrics import (average_precision_score, brier_score_loss,
+from sklearn.metrics import (accuracy_score, average_precision_score, brier_score_loss,
                              precision_score, recall_score)
 from sklearn.model_selection import cross_val_predict
 
@@ -57,6 +57,7 @@ def probability_scores(y, proba):
         "average_precision": average_precision_score(y, proba),
         "mean_predicted_proba": proba.mean(),
         "observed_rate": np.mean(y),
+        "accuracy": accuracy_score(y, proba >= 0.5),
         "precision": precision_score(y, proba >= 0.5),
         "recall": recall_score(y, proba >= 0.5),
     }
@@ -111,10 +112,10 @@ def main():
 
     # Appendix: one panel per metric
     metrics = {"brier": "Brier score", "ece": "ECE", "average_precision": "PR-AUC",
-               "precision": "Precision", "recall": "Recall"}
+               "accuracy": "Accuracy", "precision": "Precision", "recall": "Recall"}
     best = {"brier": "min", "ece": "min", "average_precision": "max"}
-    plot_metric_bars({"CV": results}, metrics, METHOD_COLORS,
-                     "calibration_bars.pdf", best=best)    
+    plot_metric_bars({"CV": results}, metrics, METHOD_COLORS, "calibration_bars.pdf",
+                     best=best, reference={"accuracy": 1 - y_train.mean()})
 
 
 if __name__ == "__main__":
